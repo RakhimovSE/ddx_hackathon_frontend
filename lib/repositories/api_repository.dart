@@ -1,11 +1,11 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import '../models/user.dart';
 import '../models/training_plan.dart';
 
 class ApiRepository {
-  // TODO Replace domain with environment variable
-  final String baseUrl = 'http://localhost:8080';
+  final String baseUrl = dotenv.env['API_URL']!;
 
   Future<List<User>> fetchUsers() async {
     final response = await http.get(Uri.parse('$baseUrl/users'));

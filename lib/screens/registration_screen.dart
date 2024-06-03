@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -20,8 +22,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final password = _passwordController.text;
 
     final response = await http.post(
-      // TODO Replace domain with environment variable
-      Uri.parse('http://localhost:8080/users'),
+      Uri.parse('${dotenv.env['API_URL']}/users'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -35,7 +36,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     if (response.statusCode == 200) {
       final user = jsonDecode(response.body);
       print('Registration successful: $user');
-      // Перейдите на другой экран или выполните другие действия после успешной регистрации
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/dashboard');
     } else {
       print('Registration failed: ${response.body}');
       // Покажите сообщение об ошибке пользователю

@@ -1,0 +1,30 @@
+import 'package:flutter/cupertino.dart';
+import 'story_widget.dart';
+
+class StoriesList extends StatelessWidget {
+  const StoriesList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: const [
+          StoryWidget(
+              name: 'Rudy Fernandez',
+              role: 'Manager',
+              imageUrl: 'https://example.com/rudy.jpg'),
+          StoryWidget(
+              name: 'Abigail Herrara',
+              role: 'Designer',
+              imageUrl: 'https://example.com/abigail.jpg'),
+          StoryWidget(
+              name: 'Liz Ambridge',
+              role: 'Manager',
+              imageUrl: 'https://example.com/liz.jpg'),
+        ],
+      ),
+    );
+  }
+}

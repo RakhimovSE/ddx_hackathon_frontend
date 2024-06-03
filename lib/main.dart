@@ -1,13 +1,23 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/dashboard_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +26,11 @@ class MyApp extends StatelessWidget {
       theme: const CupertinoThemeData(
         primaryColor: CupertinoColors.systemBlue,
       ),
-      home: const LoginScreen(),
+      home: isLoggedIn ? const DashboardScreen() : const LoginScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegistrationScreen(),
+        '/registration': (context) => const RegistrationScreen(),
+        '/dashboard': (context) => const DashboardScreen(),
       },
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,8 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final password = _passwordController.text;
 
     final response = await http.post(
-      // TODO Replace domain with environment variable
-      Uri.parse('http://localhost:8080/login'),
+      Uri.parse('${dotenv.env['API_URL']}/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -32,7 +33,10 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response.statusCode == 200) {
       final user = jsonDecode(response.body);
       print('Login successful: $user');
-      // Перейдите на другой экран или выполните другие действия после успешного входа
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/dashboard');
     } else {
       print('Login failed: ${response.body}');
       // Покажите сообщение об ошибке пользователю
@@ -74,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 16),
               CupertinoButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/register');
+                  Navigator.pushNamed(context, '/registration');
                 },
                 child: const Text('Don\'t have an account? Register'),
               ),
