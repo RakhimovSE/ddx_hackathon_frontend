@@ -7,7 +7,7 @@ part of 'exercise.dart';
 // **************************************************************************
 
 Exercise _$ExerciseFromJson(Map<String, dynamic> json) => Exercise(
-      id: (json['id'] as num).toInt(),
+      id: (json['ID'] as num).toInt(),
       name: json['name'] as String,
       muscle: json['muscle'] as String,
       additionalMuscle: json['additionalMuscle'] as String,
@@ -20,7 +20,7 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) => Exercise(
     );
 
 Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
-      'id': instance.id,
+      'ID': instance.id,
       'name': instance.name,
       'muscle': instance.muscle,
       'additionalMuscle': instance.additionalMuscle,
@@ -32,12 +32,12 @@ Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
 
 ExercisePhoto _$ExercisePhotoFromJson(Map<String, dynamic> json) =>
     ExercisePhoto(
-      id: (json['id'] as num).toInt(),
+      id: (json['ID'] as num).toInt(),
       photoUrl: json['photoUrl'] as String,
     );
 
 Map<String, dynamic> _$ExercisePhotoToJson(ExercisePhoto instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'ID': instance.id,
       'photoUrl': instance.photoUrl,
     };

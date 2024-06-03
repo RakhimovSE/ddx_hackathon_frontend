@@ -4,6 +4,7 @@ part 'training_plan.g.dart';
 
 @JsonSerializable()
 class TrainingPlan {
+  @JsonKey(name: 'ID')
   final int id;
   final String title;
   final String content;

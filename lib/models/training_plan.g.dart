@@ -7,7 +7,7 @@ part of 'training_plan.dart';
 // **************************************************************************
 
 TrainingPlan _$TrainingPlanFromJson(Map<String, dynamic> json) => TrainingPlan(
-      id: (json['id'] as num).toInt(),
+      id: (json['ID'] as num).toInt(),
       title: json['title'] as String,
       content: json['content'] as String,
       userId: (json['userId'] as num).toInt(),
@@ -15,7 +15,7 @@ TrainingPlan _$TrainingPlanFromJson(Map<String, dynamic> json) => TrainingPlan(
 
 Map<String, dynamic> _$TrainingPlanToJson(TrainingPlan instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'ID': instance.id,
       'title': instance.title,
       'content': instance.content,
       'userId': instance.userId,

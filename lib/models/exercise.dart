@@ -4,6 +4,7 @@ part 'exercise.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Exercise {
+  @JsonKey(name: 'ID')
   final int id;
   final String name;
   final String muscle;
@@ -31,6 +32,7 @@ class Exercise {
 
 @JsonSerializable()
 class ExercisePhoto {
+  @JsonKey(name: 'ID')
   final int id;
   final String photoUrl;
 
