@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import '../models/user.dart';
 import '../models/training_plan.dart';
+import '../models/exercise.dart';
 
 class ApiRepository {
   final String baseUrl = dotenv.env['API_URL']!;
@@ -26,6 +27,19 @@ class ApiRepository {
       return jsonResponse.map((plan) => TrainingPlan.fromJson(plan)).toList();
     } else {
       throw Exception('Failed to load training plans');
+    }
+  }
+
+  Future<List<Exercise>> fetchExercises() async {
+    final response = await http.get(Uri.parse('$baseUrl/exercises'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse
+          .map((exercise) => Exercise.fromJson(exercise))
+          .toList();
+    } else {
+      throw Exception('Failed to load exercises');
     }
   }
 }

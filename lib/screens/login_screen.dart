@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', true);
       if (!mounted) return;
-      Navigator.pushReplacementNamed(context, '/dashboard');
+      Navigator.of(context, rootNavigator: true).pushReplacementNamed('/home');
     } else {
       print('Login failed: ${response.body}');
       // Покажите сообщение об ошибке пользователю

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'screens/dashboard_screen.dart';
+import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 
@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
       theme: const CupertinoThemeData(
         primaryColor: CupertinoColors.systemBlue,
       ),
-      home: isLoggedIn ? const DashboardScreen() : const LoginScreen(),
+      home: isLoggedIn ? const HomeScreen() : const LoginScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/registration': (context) => const RegistrationScreen(),
-        '/dashboard': (context) => const DashboardScreen(),
+        '/home': (context) => const HomeScreen(),
       },
     );
   }

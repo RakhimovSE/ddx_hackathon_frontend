@@ -7,8 +7,8 @@ class StoryWidget extends StatelessWidget {
     required this.name,
     required this.role,
     required this.imageUrl,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String name;
   final String role;

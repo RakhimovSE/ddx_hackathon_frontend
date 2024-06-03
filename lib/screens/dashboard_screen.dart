@@ -13,7 +13,7 @@ class DashboardScreen extends StatelessWidget {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', false);
       if (!context.mounted) return;
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.of(context, rootNavigator: true).pushReplacementNamed('/login');
     }
 
     return CupertinoPageScaffold(
