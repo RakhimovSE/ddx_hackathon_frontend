@@ -64,3 +64,6 @@ ios/.symlinks/
 
 # Logs
 *.log
+
+# Environment variables
+.env
