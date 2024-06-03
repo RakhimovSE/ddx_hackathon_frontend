@@ -28,6 +28,21 @@ class TrainerList extends StatelessWidget {
           specialty: 'Фитнес',
           imageUrl: 'https://example.com/mila.jpg',
         ),
+        TrainerCard(
+          name: 'Иван Петров',
+          specialty: 'Кроссфит',
+          imageUrl: 'https://example.com/ivan.jpg',
+        ),
+        TrainerCard(
+          name: 'Елена Смирнова',
+          specialty: 'Пилатес',
+          imageUrl: 'https://example.com/elena.jpg',
+        ),
+        TrainerCard(
+          name: 'Николай Иванов',
+          specialty: 'Бокс',
+          imageUrl: 'https://example.com/nikolay.jpg',
+        ),
       ],
     );
   }

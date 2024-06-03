@@ -23,6 +23,21 @@ class StoriesList extends StatelessWidget {
               name: 'Liz Ambridge',
               role: 'Manager',
               imageUrl: 'https://example.com/liz.jpg'),
+          StoryWidget(
+            name: 'John Smith',
+            role: 'Developer',
+            imageUrl: 'https://example.com/john.jpg',
+          ),
+          StoryWidget(
+            name: 'Emily Johnson',
+            role: 'Tester',
+            imageUrl: 'https://example.com/emily.jpg',
+          ),
+          StoryWidget(
+            name: 'Michael Davis',
+            role: 'Product Manager',
+            imageUrl: 'https://example.com/michael.jpg',
+          ),
         ],
       ),
     );
