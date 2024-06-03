@@ -7,8 +7,8 @@ class StoryWidget extends StatelessWidget {
     required this.name,
     required this.role,
     required this.imageUrl,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final String name;
   final String role;
@@ -29,13 +29,25 @@ class StoryWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(name,
+          Flexible(
+            child: Text(
+              name,
               style: const TextStyle(fontSize: 12),
-              textAlign: TextAlign.center),
-          Text(role,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Flexible(
+            child: Text(
+              role,
               style: const TextStyle(
-                  fontSize: 12, color: CupertinoColors.systemGrey),
-              textAlign: TextAlign.center),
+                fontSize: 12,
+                color: CupertinoColors.systemGrey,
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );
