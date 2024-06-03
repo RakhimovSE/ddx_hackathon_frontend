@@ -30,8 +30,10 @@ class ApiRepository {
     }
   }
 
-  Future<List<Exercise>> fetchExercises() async {
-    final response = await http.get(Uri.parse('$baseUrl/exercises'));
+  Future<List<Exercise>> fetchExercises(
+      {int offset = 0, int limit = 20}) async {
+    final response = await http
+        .get(Uri.parse('$baseUrl/exercises?offset=$offset&limit=$limit'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);

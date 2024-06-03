@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/exercise.dart';
 import '../repositories/api_repository.dart';
+import '../widgets/exercise_list.dart';
 
 class ExerciseListScreen extends StatefulWidget {
   const ExerciseListScreen({super.key});
@@ -13,11 +12,50 @@ class ExerciseListScreen extends StatefulWidget {
 
 class _ExerciseListScreenState extends State<ExerciseListScreen> {
   late Future<List<Exercise>> futureExercises;
+  List<Exercise> exercises = [];
+  final ScrollController _scrollController = ScrollController();
+  bool isLoading = false;
+  int offset = 0;
+  final int limit = 20;
 
   @override
   void initState() {
     super.initState();
-    futureExercises = ApiRepository().fetchExercises();
+    _fetchMoreExercises();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _fetchMoreExercises();
+      }
+    });
+  }
+
+  Future<void> _fetchMoreExercises() async {
+    if (isLoading) return;
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      List<Exercise> newExercises =
+          await ApiRepository().fetchExercises(offset: offset, limit: limit);
+      setState(() {
+        offset += limit;
+        exercises.addAll(newExercises);
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Failed to load exercises: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -26,41 +64,10 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Exercises'),
       ),
-      child: FutureBuilder<List<Exercise>>(
-        future: futureExercises,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CupertinoActivityIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No exercises found'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final exercise = snapshot.data![index];
-                return Card(
-                  child: ListTile(
-                    leading: exercise.photos.isNotEmpty
-                        ? Image.network(
-                            '${dotenv.env['API_URL']}/static/${exercise.photos[0].photoUrl}',
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(CupertinoIcons.photo);
-                            },
-                          )
-                        : const Icon(CupertinoIcons.photo),
-                    title: Text(exercise.name),
-                    subtitle: Text(exercise.muscle),
-                  ),
-                );
-              },
-            );
-          }
-        },
+      child: ExerciseList(
+        exercises: exercises,
+        isLoading: isLoading,
+        scrollController: _scrollController,
       ),
     );
   }
