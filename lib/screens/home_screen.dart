@@ -1,52 +1,49 @@
 import 'package:flutter/cupertino.dart';
 import 'dashboard_screen.dart';
 import 'exercise_list_screen.dart';
+import 'profile_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-
-  static const List<Widget> _screens = <Widget>[
-    DashboardScreen(),
-    ExerciseListScreen(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        items: const <BottomNavigationBarItem>[
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.home),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.square_list),
+            icon: Icon(CupertinoIcons.list_bullet),
             label: 'Exercises',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.person),
+            label: 'Profile',
+          ),
         ],
-        onTap: _onItemTapped,
       ),
       tabBuilder: (context, index) {
-        return CupertinoTabView(
-          builder: (context) {
-            return CupertinoPageScaffold(
-              child: _screens[index],
+        switch (index) {
+          case 0:
+            return CupertinoTabView(
+              builder: (context) => const DashboardScreen(),
             );
-          },
-        );
+          case 1:
+            return CupertinoTabView(
+              builder: (context) => const ExerciseListScreen(),
+            );
+          case 2:
+            return CupertinoTabView(
+              builder: (context) => const ProfileScreen(),
+            );
+          default:
+            return CupertinoTabView(
+              builder: (context) => const DashboardScreen(),
+            );
+        }
       },
     );
   }
