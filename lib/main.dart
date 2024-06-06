@@ -11,13 +11,13 @@ Future<void> main() async {
   final prefs = await SharedPreferences.getInstance();
   final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
-  runApp(MyApp(isLoggedIn: isLoggedIn));
+  runApp(DDXApp(isLoggedIn: isLoggedIn));
 }
 
-class MyApp extends StatelessWidget {
+class DDXApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  const MyApp({super.key, required this.isLoggedIn});
+  const DDXApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
