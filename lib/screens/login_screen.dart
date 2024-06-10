@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/user.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,12 +33,15 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (response.statusCode == 200) {
-      final user = jsonDecode(response.body);
-      print('Login successful: $user');
+      final userMap = jsonDecode(response.body);
+      final user = User.fromJson(userMap);
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('user', jsonEncode(userMap));
       if (!mounted) return;
-      Navigator.of(context, rootNavigator: true).pushReplacementNamed('/home');
+      Navigator.pushReplacement(
+        context,
+        CupertinoPageRoute(builder: (context) => HomeScreen(userData: user)),
+      );
     } else {
       print('Login failed: ${response.body}');
       // Покажите сообщение об ошибке пользователю

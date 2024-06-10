@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'dashboard_screen.dart';
 import 'exercise_list_screen.dart';
 import 'profile_screen.dart';
+import '../models/user.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final User userData;
+
+  const HomeScreen({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class HomeScreen extends StatelessWidget {
             );
           case 2:
             return CupertinoTabView(
-              builder: (context) => const ProfileScreen(),
+              builder: (context) => ProfileScreen(userData: userData),
             );
           default:
             return CupertinoTabView(

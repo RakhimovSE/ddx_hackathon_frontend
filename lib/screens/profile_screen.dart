@@ -1,79 +1,77 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/user.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  final User userData;
 
-  Future<void> _logout(BuildContext context) async {
+  const ProfileScreen({super.key, required this.userData});
+
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late User _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _user = widget.userData;
+  }
+
+  Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isLoggedIn', false);
-    if (!context.mounted) return;
-    Navigator.of(context, rootNavigator: true).pushReplacementNamed('/login');
+    await prefs.remove('user');
+    if (!mounted) return;
+    Navigator.of(context, rootNavigator: true)
+        .pushNamedAndRemoveUntil('/login', (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Профиль'),
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text('Profile'),
+        trailing: CupertinoButton(
+          padding: EdgeInsets.zero,
+          onPressed: _logout,
+          child: const Icon(CupertinoIcons.power),
+        ),
       ),
       child: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            _buildProfileHeader(),
-            const SizedBox(height: 16),
-            _buildCard(context, 'Изменить данные', CupertinoIcons.pencil),
-            _buildCard(
-                context, 'Настройки приложения', CupertinoIcons.settings),
-            _buildCard(context, 'Платежные данные', CupertinoIcons.creditcard),
-            _buildCard(context, 'Саппорт', CupertinoIcons.question_circle),
-            const SizedBox(height: 16),
-            CupertinoButton.filled(
-              onPressed: () => _logout(context),
-              child: const Text('Выход'),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 50,
+                child: Text(
+                  _user.name.substring(0, 1),
+                  style: const TextStyle(fontSize: 40),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                _user.name,
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                _user.email,
+                style: const TextStyle(
+                    fontSize: 16, color: CupertinoColors.systemGrey),
+              ),
+              const SizedBox(height: 24),
+              CupertinoButton.filled(
+                onPressed: _logout,
+                child: const Text('Logout'),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildProfileHeader() {
-    return const Row(
-      children: [
-        CircleAvatar(
-          radius: 40,
-          backgroundImage: NetworkImage(
-              'https://example.com/profile.jpg'), // Замените на URL фотографии профиля
-        ),
-        SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Имя Пользователя',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'email@example.com',
-              style: TextStyle(fontSize: 16, color: CupertinoColors.systemGrey),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCard(BuildContext context, String title, IconData icon) {
-    return Card(
-      child: ListTile(
-        leading: Icon(icon, size: 30),
-        title: Text(title),
-        onTap: () {
-          // Обработка нажатия на карточку
-        },
       ),
     );
   }
