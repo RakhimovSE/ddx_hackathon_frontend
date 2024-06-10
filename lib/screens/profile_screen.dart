@@ -3,28 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   final User userData;
 
   const ProfileScreen({super.key, required this.userData});
 
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  late User _user;
-
-  @override
-  void initState() {
-    super.initState();
-    _user = widget.userData;
-  }
-
-  Future<void> _logout() async {
+  Future<void> logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('user');
-    if (!mounted) return;
+    if (!context.mounted) return;
     Navigator.of(context, rootNavigator: true)
         .pushNamedAndRemoveUntil('/login', (route) => false);
   }
@@ -36,38 +23,192 @@ class _ProfileScreenState extends State<ProfileScreen> {
         middle: Text('Profile'),
       ),
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+        child: ListView(
+          children: [
+            _buildUserInfo(),
+            const SizedBox(height: 20),
+            _buildListTile(
+              context,
+              CupertinoIcons.chart_bar,
+              'Статистика',
+              () {
+                // Handle Statistica tap
+              },
+            ),
+            _buildListTile(
+              context,
+              CupertinoIcons.chart_bar_square,
+              'Изометрия',
+              () {
+                // Handle Izometriya tap
+              },
+            ),
+            _buildSectionHeader(''),
+            _buildListTile(
+              context,
+              CupertinoIcons.person,
+              'Данные пользователя',
+              () {
+                // Handle User Data tap
+              },
+            ),
+            _buildListTile(
+              context,
+              CupertinoIcons.settings,
+              'Настройки приложения',
+              () {
+                // Handle App Settings tap
+              },
+            ),
+            _buildListTile(
+              context,
+              CupertinoIcons.creditcard,
+              'Платежные данные',
+              () {
+                // Handle Payment Data tap
+              },
+            ),
+            _buildListTile(
+              context,
+              CupertinoIcons.chat_bubble,
+              'Саппорт',
+              () {
+                // Handle Support tap
+              },
+            ),
+            _buildListTile(
+              context,
+              CupertinoIcons.square_arrow_left,
+              'Выход пользователя',
+              () => logout(context),
+              textColor: CupertinoColors.destructiveRed,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserInfo() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 40,
+            backgroundImage:
+                userData.avatarUrl != null && userData.avatarUrl!.isNotEmpty
+                    ? NetworkImage(userData.avatarUrl!)
+                    : null,
+            child: userData.avatarUrl == null || userData.avatarUrl!.isEmpty
+                ? const Icon(
+                    CupertinoIcons.person,
+                    size: 40,
+                    color: CupertinoColors.white,
+                  )
+                : null,
+          ),
+          const SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 50,
-                child: Text(
-                  _user.name.substring(0, 1),
-                  style: const TextStyle(fontSize: 40),
-                ),
-              ),
-              const SizedBox(height: 16),
               Text(
-                _user.name,
-                style:
-                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                userData.name,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 8),
               Text(
-                _user.email,
+                userData.email,
                 style: const TextStyle(
-                    fontSize: 16, color: CupertinoColors.systemGrey),
-              ),
-              const SizedBox(height: 24),
-              CupertinoButton.filled(
-                onPressed: _logout,
-                child: const Text('Logout'),
+                  fontSize: 16,
+                  color: CupertinoColors.systemGrey,
+                ),
               ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: CupertinoColors.systemGrey,
         ),
       ),
+    );
+  }
+
+  Widget _buildListTile(
+    BuildContext context,
+    IconData icon,
+    String title,
+    VoidCallback onTap, {
+    Color? textColor,
+  }) {
+    return CupertinoListTile(
+      leading: Icon(icon, color: textColor ?? CupertinoColors.systemGrey),
+      title: Text(title, style: TextStyle(color: textColor)),
+      trailing: const CupertinoListTileChevron(),
+      onTap: onTap,
+    );
+  }
+}
+
+class CupertinoListTile extends StatelessWidget {
+  final Widget leading;
+  final Widget title;
+  final Widget? trailing;
+  final VoidCallback? onTap;
+
+  const CupertinoListTile({
+    required this.leading,
+    required this.title,
+    this.trailing,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: CupertinoColors.systemGrey5),
+          ),
+        ),
+        child: Row(
+          children: [
+            leading,
+            const SizedBox(width: 16),
+            Expanded(child: title),
+            if (trailing != null) trailing!,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CupertinoListTileChevron extends StatelessWidget {
+  const CupertinoListTileChevron();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Icon(
+      CupertinoIcons.forward,
+      color: CupertinoColors.systemGrey,
     );
   }
 }
