@@ -32,13 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: const Text('Profile'),
-        trailing: CupertinoButton(
-          padding: EdgeInsets.zero,
-          onPressed: _logout,
-          child: const Icon(CupertinoIcons.power),
-        ),
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Profile'),
       ),
       child: SafeArea(
         child: Padding(

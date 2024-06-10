@@ -17,15 +17,8 @@ class DashboardScreen extends StatelessWidget {
     }
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: const Text('Тренерский состав'),
-        trailing: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: const Icon(CupertinoIcons.power),
-          onPressed: () {
-            logout(context);
-          },
-        ),
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('Тренерский состав'),
       ),
       child: SafeArea(
         child: SingleChildScrollView(
