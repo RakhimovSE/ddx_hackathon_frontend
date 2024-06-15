@@ -24,7 +24,7 @@ class ExerciseListItem extends StatelessWidget {
               )
             : const Icon(CupertinoIcons.photo),
         title: Text(exercise.name),
-        subtitle: Text(exercise.muscle),
+        subtitle: Text(exercise.muscles.map((e) => e.name).join(", ")),
       ),
     );
   }
