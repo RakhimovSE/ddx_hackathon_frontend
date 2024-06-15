@@ -46,12 +46,6 @@ class TrainerScreen extends StatelessWidget {
               ),
               StoriesList(),
               Padding(
-                padding: EdgeInsets.all(16.0),
-                child: CupertinoSearchTextField(
-                  placeholder: 'Найти тренера...',
-                ),
-              ),
-              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
                   'Список тренеров',
@@ -59,6 +53,12 @@ class TrainerScreen extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: CupertinoSearchTextField(
+                  placeholder: 'Найти тренера...',
                 ),
               ),
               TrainerList(),
