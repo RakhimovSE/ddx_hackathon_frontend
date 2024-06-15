@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/exercise.dart';
+import 'custom_image.dart';
 
 class ExerciseListItem extends StatelessWidget {
   final Exercise exercise;
@@ -10,21 +10,51 @@ class ExerciseListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: exercise.photos.isNotEmpty
-            ? Image.network(
-                '${dotenv.env['API_URL']}/static/${exercise.photos[0].photoUrl}',
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(CupertinoIcons.photo);
-                },
-              )
-            : const Icon(CupertinoIcons.photo),
-        title: Text(exercise.name),
-        subtitle: Text(exercise.muscles.map((e) => e.name).join(", ")),
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {},
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: const BoxDecoration(
+          color: CupertinoColors.systemBackground,
+          border: Border(
+            bottom: BorderSide(
+              color: CupertinoColors.separator,
+              width: 0.0,
+            ),
+          ),
+        ),
+        child: Row(
+          children: [
+            exercise.photos.isNotEmpty
+                ? CustomImage(
+                    imageUrl:
+                        '${dotenv.env['API_URL']}/static/${exercise.photos[0].photoUrl}',
+                    width: 50,
+                    height: 50,
+                  )
+                : const Icon(CupertinoIcons.photo, size: 50),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(exercise.name,
+                      style: CupertinoTheme.of(context)
+                          .textTheme
+                          .textStyle
+                          .copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text(exercise.muscles.map((e) => e.name).join(", "),
+                      style: CupertinoTheme.of(context)
+                          .textTheme
+                          .textStyle
+                          .copyWith(
+                              fontSize: 14, color: CupertinoColors.systemGrey)),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
