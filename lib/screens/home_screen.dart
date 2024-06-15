@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              builder: (context) => const DashboardScreen(),
+              builder: (context) => const TrainerScreen(),
             );
           case 1:
             return CupertinoTabView(
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
             );
           default:
             return CupertinoTabView(
-              builder: (context) => const DashboardScreen(),
+              builder: (context) => const TrainerScreen(),
             );
         }
       },

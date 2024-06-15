@@ -4,8 +4,8 @@ import '../widgets/trainer_card.dart';
 import '../widgets/stories_list.dart';
 import '../widgets/trainer_list.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+class TrainerScreen extends StatelessWidget {
+  const TrainerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
