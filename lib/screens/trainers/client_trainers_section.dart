@@ -33,9 +33,7 @@ class ClientTrainersSection extends StatelessWidget {
                     return TrainerCard(
                       name: trainer.name,
                       specialties: trainer.trainerProfile?.specialties ?? [],
-                      imageUrl:
-                          trainer.avatarUrl ?? 'https://example.com/avatar.jpg',
-                      rating: 4.5,
+                      imageUrl: trainer.avatarUrl ?? '',
                     );
                   }).toList(),
                 );

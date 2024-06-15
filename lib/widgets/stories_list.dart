@@ -11,32 +11,23 @@ class StoriesList extends StatelessWidget {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: const [
-          StoryWidget(
-              name: 'Rudy Fernandez',
-              role: 'Manager',
-              imageUrl: 'https://example.com/rudy.jpg'),
-          StoryWidget(
-              name: 'Abigail Herrara',
-              role: 'Designer',
-              imageUrl: 'https://example.com/abigail.jpg'),
-          StoryWidget(
-              name: 'Liz Ambridge',
-              role: 'Manager',
-              imageUrl: 'https://example.com/liz.jpg'),
+          StoryWidget(name: 'Rudy Fernandez', role: 'Manager', imageUrl: ''),
+          StoryWidget(name: 'Abigail Herrara', role: 'Designer', imageUrl: ''),
+          StoryWidget(name: 'Liz Ambridge', role: 'Manager', imageUrl: ''),
           StoryWidget(
             name: 'John Smith',
             role: 'Developer',
-            imageUrl: 'https://example.com/john.jpg',
+            imageUrl: '',
           ),
           StoryWidget(
             name: 'Emily Johnson',
             role: 'Tester',
-            imageUrl: 'https://example.com/emily.jpg',
+            imageUrl: '',
           ),
           StoryWidget(
             name: 'Michael Davis',
             role: 'Product Manager',
-            imageUrl: 'https://example.com/michael.jpg',
+            imageUrl: '',
           ),
         ],
       ),
