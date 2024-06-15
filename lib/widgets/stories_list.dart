@@ -7,7 +7,7 @@ class StoriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 120,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: const [

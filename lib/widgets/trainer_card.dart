@@ -22,35 +22,42 @@ class TrainerCard extends StatelessWidget {
       padding: EdgeInsets.zero,
       onPressed: () {},
       child: Card(
-        child: Row(
-          children: [
-            CustomImage(imageUrl: imageUrl, width: 100, height: 100),
-            const SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold)),
-                Text(specialty,
-                    style: const TextStyle(
-                        fontSize: 16, color: CupertinoColors.systemGrey)),
-                if (rating != null) ...[
-                  Row(
-                    children: List.generate(5, (index) {
-                      return Icon(
-                        index < rating!
-                            ? CupertinoIcons.star_fill
-                            : CupertinoIcons.star,
-                        color: index < rating! ? Colors.purple : Colors.grey,
-                        size: 16,
-                      );
-                    }),
-                  ),
-                ],
-              ],
-            ),
-          ],
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              CustomImage(imageUrl: imageUrl, width: 80, height: 80),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(name,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(specialty,
+                        style: const TextStyle(
+                            fontSize: 16, color: CupertinoColors.systemGrey)),
+                    if (rating != null) ...[
+                      Row(
+                        children: List.generate(5, (index) {
+                          return Icon(
+                            index < rating!
+                                ? CupertinoIcons.star_fill
+                                : CupertinoIcons.star,
+                            color:
+                                index < rating! ? Colors.purple : Colors.grey,
+                            size: 16,
+                          );
+                        }),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
