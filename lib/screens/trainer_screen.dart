@@ -1,4 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/trainer_bloc.dart';
+import '../bloc/trainer_event.dart';
+import '../bloc/trainer_state.dart';
+import '../repositories/api_repository.dart';
 import '../widgets/trainer_card.dart';
 import '../widgets/stories_list.dart';
 import '../widgets/trainer_list.dart';
@@ -8,61 +13,122 @@ class TrainerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Тренерский состав'),
-        trailing: Icon(CupertinoIcons.chat_bubble_2_fill),
-      ),
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  'Ваш тренер',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+    return BlocProvider(
+      create: (context) =>
+          TrainerBloc(apiRepository: ApiRepository())..add(FetchTrainers()),
+      child: CupertinoPageScaffold(
+        navigationBar: const CupertinoNavigationBar(
+          middle: Text('Тренерский состав'),
+          trailing: Icon(CupertinoIcons.chat_bubble_2_fill),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'Ваш тренер',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              TrainerCard(
-                name: 'Алина Колебанова',
-                specialty: 'Йога, похудение',
-                imageUrl: 'https://example.com/alina.jpg',
-                rating: 4.5,
-              ),
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  'Истории',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                BlocBuilder<TrainerBloc, TrainerState>(
+                  builder: (context, state) {
+                    if (state is TrainerLoading) {
+                      return const Center(child: CupertinoActivityIndicator());
+                    } else if (state is TrainerLoaded) {
+                      if (state.trainers.isNotEmpty) {
+                        return Column(
+                          children: state.trainers.map((trainer) {
+                            return TrainerCard(
+                              name: trainer.name,
+                              specialties:
+                                  trainer.trainerProfile?.specialties ?? [],
+                              imageUrl: trainer.avatarUrl ??
+                                  'https://example.com/avatar.jpg',
+                            );
+                          }).toList(),
+                        );
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            'Нет тренеров',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: CupertinoColors.systemGrey,
+                            ),
+                          ),
+                        );
+                      }
+                    } else if (state is TrainerError) {
+                      return Center(
+                          child: Text(
+                              'Не удалось загрузить тренеров: ${state.message}'));
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'Истории',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              StoriesList(),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text(
-                  'Список тренеров',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                const StoriesList(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'Список тренеров',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: CupertinoSearchTextField(
-                  placeholder: 'Найти тренера...',
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: CupertinoSearchTextField(
+                    placeholder: 'Найти тренера...',
+                  ),
                 ),
-              ),
-              TrainerList(),
-            ],
+                BlocBuilder<TrainerBloc, TrainerState>(
+                  builder: (context, state) {
+                    if (state is TrainerLoading) {
+                      return const Center(child: CupertinoActivityIndicator());
+                    } else if (state is TrainerLoaded) {
+                      if (state.trainers.isNotEmpty) {
+                        return TrainerList(trainers: state.trainers);
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            'Нет тренеров',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: CupertinoColors.systemGrey,
+                            ),
+                          ),
+                        );
+                      }
+                    } else if (state is TrainerError) {
+                      return Center(
+                          child: Text(
+                              'Не удалось загрузить тренеров: ${state.message}'));
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
