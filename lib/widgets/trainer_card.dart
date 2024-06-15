@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'custom_image.dart';
 
 class TrainerCard extends StatelessWidget {
@@ -21,8 +20,20 @@ class TrainerCard extends StatelessWidget {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {},
-      child: Card(
+      child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        decoration: BoxDecoration(
+          color: CupertinoColors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: CupertinoColors.systemGrey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -46,8 +57,9 @@ class TrainerCard extends StatelessWidget {
                             index < rating!
                                 ? CupertinoIcons.star_fill
                                 : CupertinoIcons.star,
-                            color:
-                                index < rating! ? Colors.purple : Colors.grey,
+                            color: index < rating!
+                                ? CupertinoColors.systemPurple
+                                : CupertinoColors.systemGrey,
                             size: 16,
                           );
                         }),
