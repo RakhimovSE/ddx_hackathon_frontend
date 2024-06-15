@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'custom_image.dart';
 
 class StoryWidget extends StatelessWidget {
@@ -21,9 +20,17 @@ class StoryWidget extends StatelessWidget {
       margin: const EdgeInsets.only(right: 16),
       child: Column(
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: CupertinoColors.systemGrey,
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: NetworkImage(imageUrl),
+                fit: BoxFit.cover,
+              ),
+              color: CupertinoColors.systemGrey.withOpacity(0.2),
+            ),
             child: ClipOval(
               child: CustomImage(imageUrl: imageUrl, width: 60, height: 60),
             ),
