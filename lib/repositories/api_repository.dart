@@ -45,6 +45,17 @@ class ApiRepository {
     }
   }
 
+  Future<List<User>> fetchTrainers() async {
+    final response = await http.get(Uri.parse('$baseUrl/trainers'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => User.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to load trainers');
+    }
+  }
+
   Future<List<User>> fetchTrainersForClient(int clientId) async {
     final response =
         await http.get(Uri.parse('$baseUrl/clients/$clientId/trainers'));

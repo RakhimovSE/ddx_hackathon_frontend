@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'bloc/client_trainer_bloc.dart';
+import 'bloc/trainer_bloc.dart';
+import 'repositories/api_repository.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
@@ -31,18 +35,30 @@ class DDXApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      title: 'DDX Hackathon',
-      theme: const CupertinoThemeData(
-        primaryColor: CupertinoColors.systemBlue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => TrainerBloc(apiRepository: ApiRepository()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              ClientTrainerBloc(apiRepository: ApiRepository()),
+        ),
+      ],
+      child: CupertinoApp(
+        title: 'DDX Hackathon',
+        theme: const CupertinoThemeData(
+          primaryColor: CupertinoColors.systemBlue,
+        ),
+        home:
+            isLoggedIn ? HomeScreen(userData: userData!) : const LoginScreen(),
+        routes: {
+          '/login': (context) => const LoginScreen(),
+          '/registration': (context) => const RegistrationScreen(),
+          '/home': (context) => HomeScreen(userData: userData!),
+          '/profile': (context) => ProfileScreen(userData: userData!),
+        },
       ),
-      home: isLoggedIn ? HomeScreen(userData: userData!) : const LoginScreen(),
-      routes: {
-        '/login': (context) => const LoginScreen(),
-        '/registration': (context) => const RegistrationScreen(),
-        '/home': (context) => HomeScreen(userData: userData!),
-        '/profile': (context) => ProfileScreen(userData: userData!),
-      },
     );
   }
 }
