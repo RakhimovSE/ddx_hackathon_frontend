@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'custom_image.dart';
 import '../models/user.dart';
 
 class UserInfo extends StatelessWidget {
