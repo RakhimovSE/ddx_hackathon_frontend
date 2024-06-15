@@ -31,7 +31,7 @@ class CupertinoListTile extends StatelessWidget {
   final Widget? trailing;
   final VoidCallback? onTap;
 
-  const CupertinoListTile({
+  const CupertinoListTile({super.key, 
     required this.leading,
     required this.title,
     this.trailing,
@@ -63,7 +63,7 @@ class CupertinoListTile extends StatelessWidget {
 }
 
 class CupertinoListTileChevron extends StatelessWidget {
-  const CupertinoListTileChevron();
+  const CupertinoListTileChevron({super.key});
 
   @override
   Widget build(BuildContext context) {
