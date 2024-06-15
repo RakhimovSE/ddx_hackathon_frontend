@@ -30,11 +30,7 @@ class ClientTrainersSection extends StatelessWidget {
               if (state.clientTrainers.isNotEmpty) {
                 return Column(
                   children: state.clientTrainers.map((trainer) {
-                    return TrainerCard(
-                      name: trainer.name,
-                      specialties: trainer.trainerProfile?.specialties ?? [],
-                      imageUrl: trainer.avatarUrl ?? '',
-                    );
+                    return TrainerCard(trainer: trainer);
                   }).toList(),
                 );
               } else {

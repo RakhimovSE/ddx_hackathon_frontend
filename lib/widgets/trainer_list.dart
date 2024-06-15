@@ -10,14 +10,8 @@ class TrainerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: trainers
-          .map((trainer) => TrainerCard(
-                name: trainer.name,
-                specialties: trainer.trainerProfile?.specialties ?? [],
-                imageUrl: trainer.avatarUrl ?? '',
-                rating: 4,
-              ))
-          .toList(),
+      children:
+          trainers.map((trainer) => TrainerCard(trainer: trainer)).toList(),
     );
   }
 }

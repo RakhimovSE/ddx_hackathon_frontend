@@ -1,26 +1,28 @@
 import 'package:flutter/cupertino.dart';
+import '../models/user.dart';
+import '../screens/trainer_profile_screen.dart';
 import 'custom_image.dart';
-import '../models/specialty.dart';
 
 class TrainerCard extends StatelessWidget {
   const TrainerCard({
-    required this.name,
-    required this.specialties,
-    required this.imageUrl,
-    this.rating,
+    required this.trainer,
     super.key,
   });
 
-  final String name;
-  final List<Specialty> specialties;
-  final String imageUrl;
-  final double? rating;
+  final User trainer;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => TrainerProfileScreen(trainer: trainer),
+          ),
+        );
+      },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         padding: const EdgeInsets.all(8.0),
@@ -37,35 +39,23 @@ class TrainerCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            CustomImage(imageUrl: imageUrl, width: 80, height: 80),
+            CustomImage(
+                imageUrl: trainer.avatarUrl ?? '', width: 80, height: 80),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(name,
+                  Text(trainer.name,
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold)),
                   Text(
-                    specialties.map((e) => e.name).join(", "),
+                    trainer.trainerProfile!.specialties
+                        .map((e) => e.name)
+                        .join(", "),
                     style: const TextStyle(
                         fontSize: 16, color: CupertinoColors.systemGrey),
                   ),
-                  if (rating != null) ...[
-                    Row(
-                      children: List.generate(5, (index) {
-                        return Icon(
-                          index < rating!
-                              ? CupertinoIcons.star_fill
-                              : CupertinoIcons.star,
-                          color: index < rating!
-                              ? CupertinoColors.systemYellow
-                              : CupertinoColors.systemGrey,
-                          size: 16,
-                        );
-                      }),
-                    ),
-                  ],
                 ],
               ),
             ),

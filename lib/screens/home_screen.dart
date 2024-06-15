@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import '../models/user.dart';
+import 'main_screen.dart';
 import 'trainers/trainer_screen.dart';
 import 'exercise_list_screen.dart';
 import 'profile_screen.dart';
-import '../models/user.dart';
 
 class HomeScreen extends StatelessWidget {
   final User userData;
@@ -16,15 +17,19 @@ class HomeScreen extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.home),
-            label: 'Dashboard',
+            label: 'Главная',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.person_2_fill),
+            label: 'Тренера',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.list_bullet),
-            label: 'Exercises',
+            label: 'Упражнения',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person),
-            label: 'Profile',
+            label: 'Профиль',
           ),
         ],
       ),
@@ -32,19 +37,23 @@ class HomeScreen extends StatelessWidget {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              builder: (context) => const TrainerScreen(),
+              builder: (context) => const MainScreen(),
             );
           case 1:
             return CupertinoTabView(
-              builder: (context) => const ExerciseListScreen(),
+              builder: (context) => const TrainerScreen(),
             );
           case 2:
+            return CupertinoTabView(
+              builder: (context) => const ExerciseListScreen(),
+            );
+          case 3:
             return CupertinoTabView(
               builder: (context) => ProfileScreen(userData: userData),
             );
           default:
             return CupertinoTabView(
-              builder: (context) => const TrainerScreen(),
+              builder: (context) => const MainScreen(),
             );
         }
       },
