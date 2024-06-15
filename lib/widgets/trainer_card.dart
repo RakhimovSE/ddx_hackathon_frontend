@@ -7,12 +7,14 @@ class TrainerCard extends StatelessWidget {
     required this.name,
     required this.specialty,
     required this.imageUrl,
+    this.rating,
     super.key,
   });
 
   final String name;
   final String specialty;
   final String imageUrl;
+  final double? rating;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,19 @@ class TrainerCard extends StatelessWidget {
                 Text(specialty,
                     style: const TextStyle(
                         fontSize: 16, color: CupertinoColors.systemGrey)),
+                if (rating != null) ...[
+                  Row(
+                    children: List.generate(5, (index) {
+                      return Icon(
+                        index < rating!
+                            ? CupertinoIcons.star_fill
+                            : CupertinoIcons.star,
+                        color: index < rating! ? Colors.purple : Colors.grey,
+                        size: 16,
+                      );
+                    }),
+                  ),
+                ],
               ],
             ),
           ],
