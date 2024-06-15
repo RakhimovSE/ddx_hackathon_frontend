@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'bloc/client_trainer_bloc.dart';
 import 'bloc/trainer_bloc.dart';
+import 'env_config.dart';
 import 'repositories/api_repository.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
@@ -13,7 +13,7 @@ import 'models/user.dart';
 import 'dart:convert';
 
 Future<void> main() async {
-  await dotenv.load(fileName: ".env");
+  await EnvConfig.load();
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final String? userJson = prefs.getString('user');

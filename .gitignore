@@ -65,5 +65,7 @@ ios/.symlinks/
 # Logs
 *.log
 
-# Environment variables
-.env
+# Ignore all env files
+.env*
+# Except example env files
+!.env*.example
