@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/trainer_card.dart';
 import '../widgets/stories_list.dart';
 import '../widgets/trainer_list.dart';
@@ -9,13 +8,6 @@ class TrainerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> logout(BuildContext context) async {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', false);
-      if (!context.mounted) return;
-      Navigator.of(context, rootNavigator: true).pushReplacementNamed('/login');
-    }
-
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Тренерский состав'),
