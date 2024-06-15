@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'custom_image.dart';
 import '../models/user.dart';
 
 class UserInfo extends StatelessWidget {
@@ -13,17 +13,25 @@ class UserInfo extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundImage:
-                userData.avatarUrl != null && userData.avatarUrl!.isNotEmpty
-                    ? NetworkImage(userData.avatarUrl!)
-                    : null,
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image:
+                  userData.avatarUrl != null && userData.avatarUrl!.isNotEmpty
+                      ? DecorationImage(
+                          image: NetworkImage(userData.avatarUrl!),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+              color: CupertinoColors.systemGrey.withOpacity(0.2),
+            ),
             child: userData.avatarUrl == null || userData.avatarUrl!.isEmpty
                 ? const Icon(
                     CupertinoIcons.person,
                     size: 40,
-                    color: CupertinoColors.white,
+                    color: CupertinoColors.systemGrey,
                   )
                 : null,
           ),
