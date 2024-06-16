@@ -1,8 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
 import '../../data/models/client_workout.dart';
 import '../../data/repositories/api_repository.dart';
 import 'calendar.dart';
@@ -66,6 +65,8 @@ class WeeklyTrainingsSectionState extends State<WeeklyTrainingsSection> {
           ),
         ),
         Calendar(
+          selectedDay: selectedDay,
+          focusedDay: selectedDay,
           onDaySelected: (selectedDay, focusedDay) {
             setState(() {
               this.selectedDay = selectedDay;
