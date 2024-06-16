@@ -1,42 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-class TrainingPlansSection extends StatelessWidget {
-  const TrainingPlansSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text(
-            'Тренировочные планы',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        TrainingCard(
-          title: 'ПОХУДЕНИЕ СТАРТ',
-          subtitle: '3/24 тренировок',
-          trainer: 'Алина Колебанова',
-          progress: 45,
-          imageUrl: 'https://example.com/training1.jpg',
-        ),
-        TrainingCard(
-          title: 'ЙОГА ДЛЯ НОВИЧКОВ',
-          subtitle: '1/12 тренировок',
-          trainer: 'Алина Колебанова',
-          progress: 20,
-          imageUrl: 'https://example.com/training2.jpg',
-        ),
-      ],
-    );
-  }
-}
-
 class TrainingCard extends StatelessWidget {
   final String title;
   final String subtitle;

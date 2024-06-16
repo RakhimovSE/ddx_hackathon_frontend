@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'training_plans_section.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/client_training_plan/client_training_plan_bloc.dart';
+import '../../bloc/client_training_plan/client_training_plan_event.dart';
+import 'client_training_plans_section.dart';
 import 'weekly_trainings_section.dart';
 
 class MainScreen extends StatelessWidget {
@@ -7,6 +10,8 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ClientTrainingPlanBloc>().add(FetchClientTrainingPlans());
+
     return const CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Тренировки'),
@@ -16,7 +21,7 @@ class MainScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TrainingPlansSection(),
+              ClientTrainingPlansSection(),
               WeeklyTrainingsSection(),
             ],
           ),
