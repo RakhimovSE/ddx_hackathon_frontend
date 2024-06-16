@@ -30,7 +30,7 @@ class ChatScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: CupertinoTextField(
                       placeholder: 'Напишите сообщение',
                     ),
