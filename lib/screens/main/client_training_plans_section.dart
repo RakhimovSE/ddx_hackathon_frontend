@@ -31,7 +31,7 @@ class ClientTrainingPlansSection extends StatelessWidget {
                 children: state.trainingPlans.map((plan) {
                   return TrainingCard(
                     title: plan.name,
-                    subtitle: 'План тренировки',
+                    subtitle: plan.description,
                     trainer: 'Тренер', // Placeholder, update as needed
                     progress: 0, // Placeholder, update as needed
                     imageUrl: '', // Placeholder, update as needed
