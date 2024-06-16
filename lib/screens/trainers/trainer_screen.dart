@@ -1,4 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/client_trainer/client_trainer_bloc.dart';
+import '../../bloc/client_trainer/client_trainer_event.dart';
+import '../../bloc/trainer/trainer_bloc.dart';
+import '../../bloc/trainer/trainer_event.dart';
 import '../chat_list_screen.dart';
 import 'client_trainers_section.dart';
 import 'stories_section.dart';
@@ -9,8 +14,8 @@ class TrainerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // context.read<TrainerBloc>().add(FetchTrainers());
-    // context.read<ClientTrainerBloc>().add(FetchClientTrainers());
+    context.read<TrainerBloc>().add(FetchTrainers());
+    context.read<ClientTrainerBloc>().add(FetchClientTrainers());
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
