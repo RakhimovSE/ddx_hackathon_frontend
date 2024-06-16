@@ -1,21 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'client_workout.dart';
+part of 'client_workout_exercise.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ClientWorkout _$ClientWorkoutFromJson(Map<String, dynamic> json) =>
-    ClientWorkout(
+ClientWorkoutExercise _$ClientWorkoutExerciseFromJson(
+        Map<String, dynamic> json) =>
+    ClientWorkoutExercise(
       id: (json['ID'] as num).toInt(),
-      clientTrainingPlanId: (json['client_training_plan_id'] as num).toInt(),
-      workoutId: (json['workout_id'] as num).toInt(),
-      name: json['name'] as String,
-      description: json['description'] as String,
-      exercises: (json['Exercises'] as List<dynamic>)
-          .map((e) => ClientWorkoutExercise.fromJson(e as Map<String, dynamic>))
+      clientWorkoutId: (json['client_workout_id'] as num).toInt(),
+      workoutExerciseId: (json['workout_exercise_id'] as num).toInt(),
+      sets: (json['Sets'] as List<dynamic>)
+          .map((e) => ClientExerciseSet.fromJson(e as Map<String, dynamic>))
           .toList(),
+      restTime: (json['rest_time'] as num).toInt(),
       order: (json['order'] as num).toInt(),
       startDate: json['start_date'] == null
           ? null
@@ -31,14 +31,14 @@ ClientWorkout _$ClientWorkoutFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['planned_end_date'] as String),
     );
 
-Map<String, dynamic> _$ClientWorkoutToJson(ClientWorkout instance) =>
+Map<String, dynamic> _$ClientWorkoutExerciseToJson(
+        ClientWorkoutExercise instance) =>
     <String, dynamic>{
       'ID': instance.id,
-      'client_training_plan_id': instance.clientTrainingPlanId,
-      'workout_id': instance.workoutId,
-      'name': instance.name,
-      'description': instance.description,
-      'Exercises': instance.exercises,
+      'client_workout_id': instance.clientWorkoutId,
+      'workout_exercise_id': instance.workoutExerciseId,
+      'Sets': instance.sets,
+      'rest_time': instance.restTime,
       'order': instance.order,
       'start_date': instance.startDate?.toIso8601String(),
       'end_date': instance.endDate?.toIso8601String(),
