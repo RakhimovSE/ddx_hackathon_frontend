@@ -27,6 +27,20 @@ class ClientTrainingPlansSection extends StatelessWidget {
             if (state is ClientTrainingPlanLoading) {
               return const Center(child: CupertinoActivityIndicator());
             } else if (state is ClientTrainingPlanLoaded) {
+              if (state.trainingPlans.isEmpty) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'У вас нет тренировочных планов.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: CupertinoColors.systemGrey,
+                      ),
+                    ),
+                  ),
+                );
+              }
               return Column(
                 children: state.trainingPlans.map((plan) {
                   return TrainingCard(
