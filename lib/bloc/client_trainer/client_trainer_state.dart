@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../models/user.dart';
+import '../../data/models/user.dart';
 
 abstract class ClientTrainerState extends Equatable {
   const ClientTrainerState();

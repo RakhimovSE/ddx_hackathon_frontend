@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../models/exercise.dart';
+import '../data/models/exercise.dart';
 import 'custom_image.dart';
 
 class ExerciseListItem extends StatelessWidget {

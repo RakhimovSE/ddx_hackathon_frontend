@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import '../models/exercise.dart';
-import '../repositories/api_repository.dart';
+import '../data/models/exercise.dart';
+import '../data/repositories/api_repository.dart';
 import '../widgets/exercise_list.dart';
 
 class ExerciseListScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/user.dart';
+import '../data/models/user.dart';
 import '../widgets/profile_section_header.dart';
 import '../widgets/profile_list_tile.dart';
 import '../widgets/user_info.dart';

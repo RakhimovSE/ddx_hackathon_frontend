@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../models/user.dart';
+import '../data/models/user.dart';
 import 'main/main_screen.dart';
 import 'trainers/trainer_screen.dart';
 import 'exercise_list_screen.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../models/user.dart';
+import '../data/models/user.dart';
 import '../widgets/custom_image.dart';
 
 class TrainerProfileScreen extends StatelessWidget {

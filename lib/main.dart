@@ -4,12 +4,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bloc/client_trainer/client_trainer_bloc.dart';
 import 'bloc/trainer/trainer_bloc.dart';
 import 'config/env_config.dart';
-import 'repositories/api_repository.dart';
+import 'data/repositories/api_repository.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/profile_screen.dart';
-import 'models/user.dart';
+import 'data/models/user.dart';
 import 'dart:convert';
 
 Future<void> main() async {

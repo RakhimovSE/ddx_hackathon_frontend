@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../repositories/api_repository.dart';
+import '../../data/repositories/api_repository.dart';
 import 'client_trainer_event.dart';
 import 'client_trainer_state.dart';
 

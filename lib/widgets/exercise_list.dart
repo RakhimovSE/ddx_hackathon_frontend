@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../models/exercise.dart';
+import '../data/models/exercise.dart';
 import 'exercise_list_item.dart';
 
 class ExerciseList extends StatelessWidget {

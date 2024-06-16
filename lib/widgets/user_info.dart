@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../models/user.dart';
+import '../data/models/user.dart';
 
 class UserInfo extends StatelessWidget {
   final User userData;
