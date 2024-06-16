@@ -26,11 +26,9 @@ class TrainingSchedule extends StatelessWidget {
     return Column(
       children: workouts.map((workout) {
         String time = 'No time specified';
-        if (workout.startDate != null) {
-          final DateFormat formatter = DateFormat.Hm();
-          time = formatter.format(workout.startDate!);
-        }
-        return TrainingScheduleCard(
+        final DateFormat formatter = DateFormat.Hm();
+        time = formatter.format(workout.startDate);
+              return TrainingScheduleCard(
           title: workout.name,
           time: time,
           trainer: 'Тренер', // Adjust as necessary
