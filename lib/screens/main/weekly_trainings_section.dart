@@ -49,6 +49,10 @@ class WeeklyTrainingsSectionState extends State<WeeklyTrainingsSection> {
     }
   }
 
+  Future<void> fetchWorkoutsForSelectedDay() async {
+    await _fetchWorkouts(selectedDay);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

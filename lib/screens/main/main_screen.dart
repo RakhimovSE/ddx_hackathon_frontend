@@ -8,23 +8,39 @@ import 'weekly_trainings_section.dart';
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
+  Future<void> _onRefresh(BuildContext context,
+      GlobalKey<WeeklyTrainingsSectionState> weeklyTrainingsKey) async {
+    context.read<ClientTrainingPlanBloc>().add(FetchClientTrainingPlans());
+    await weeklyTrainingsKey.currentState?.fetchWorkoutsForSelectedDay();
+    await Future.delayed(const Duration(seconds: 1));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<WeeklyTrainingsSectionState> weeklyTrainingsKey =
+        GlobalKey<WeeklyTrainingsSectionState>();
+
     context.read<ClientTrainingPlanBloc>().add(FetchClientTrainingPlans());
 
-    return const CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
         middle: Text('Тренировки'),
       ),
       child: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClientTrainingPlansSection(),
-              WeeklyTrainingsSection(),
-            ],
-          ),
+        child: CustomScrollView(
+          slivers: [
+            CupertinoSliverRefreshControl(
+              onRefresh: () => _onRefresh(context, weeklyTrainingsKey),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  const ClientTrainingPlansSection(),
+                  WeeklyTrainingsSection(key: weeklyTrainingsKey),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
