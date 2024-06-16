@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person_2_fill),
-            label: 'Тренера',
+            label: 'Тренеры',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.list_bullet),
