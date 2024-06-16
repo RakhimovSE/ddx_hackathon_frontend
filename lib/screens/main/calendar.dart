@@ -22,6 +22,7 @@ class Calendar extends StatelessWidget {
         lastDay: DateTime.utc(2030, 12, 31),
         focusedDay: focusedDay,
         selectedDayPredicate: (day) => isSameDay(selectedDay, day),
+        calendarFormat: CalendarFormat.week,
         calendarStyle: const CalendarStyle(
           selectedDecoration: BoxDecoration(
             color: CupertinoColors.systemBlue,

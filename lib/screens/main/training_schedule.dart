@@ -10,6 +10,19 @@ class TrainingSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (workouts.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Text(
+          'Тренировок на выбранную дату нет.',
+          style: TextStyle(
+            fontSize: 18,
+            color: CupertinoColors.systemGrey,
+          ),
+        ),
+      );
+    }
+
     return Column(
       children: workouts.map((workout) {
         String time = 'No time specified';
