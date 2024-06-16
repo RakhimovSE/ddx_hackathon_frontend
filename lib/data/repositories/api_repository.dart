@@ -5,6 +5,7 @@ import '../models/client_training_plan.dart';
 import '../models/user.dart';
 import '../models/training_plan.dart';
 import '../models/exercise.dart';
+import '../models/client_workout.dart';
 
 class ApiRepository {
   final String baseUrl = dotenv.env['API_URL']!;
@@ -81,6 +82,26 @@ class ApiRepository {
           .toList();
     } else {
       throw Exception('Failed to load client training plans');
+    }
+  }
+
+  Future<List<ClientWorkout>> fetchClientWorkouts(int clientId,
+      {String? status, String? date}) async {
+    String url = '$baseUrl/clients/$clientId/workouts';
+
+    if (status != null) {
+      url += '?status=$status';
+    } else if (date != null) {
+      url += '?date=$date';
+    }
+
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      List<dynamic> body = json.decode(response.body);
+      return body.map((dynamic item) => ClientWorkout.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load client workouts');
     }
   }
 }

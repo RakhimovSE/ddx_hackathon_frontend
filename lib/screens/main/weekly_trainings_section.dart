@@ -1,15 +1,61 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class WeeklyTrainingsSection extends StatelessWidget {
+import '../../data/models/client_workout.dart';
+import '../../data/repositories/api_repository.dart';
+
+class WeeklyTrainingsSection extends StatefulWidget {
   const WeeklyTrainingsSection({super.key});
 
   @override
+  WeeklyTrainingsSectionState createState() => WeeklyTrainingsSectionState();
+}
+
+class WeeklyTrainingsSectionState extends State<WeeklyTrainingsSection> {
+  List<ClientWorkout> workouts = [];
+  DateTime selectedDay = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchWorkouts(selectedDay);
+  }
+
+  Future<void> _fetchWorkouts(DateTime date) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? userJson = prefs.getString('user');
+    if (userJson != null) {
+      final Map<String, dynamic> userMap = jsonDecode(userJson);
+      final int clientId = userMap['ID'];
+      if (!mounted) return;
+      final apiRepository = context.read<ApiRepository>();
+
+      try {
+        final fetchedWorkouts = await apiRepository.fetchClientWorkouts(
+          clientId,
+          date: date.toIso8601String().split('T')[0],
+        );
+        if (mounted) {
+          setState(() {
+            workouts = fetchedWorkouts;
+          });
+        }
+      } catch (e) {
+        print("Failed to load workouts: $e");
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
+        const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
             'План на неделю',
@@ -19,15 +65,24 @@ class WeeklyTrainingsSection extends StatelessWidget {
             ),
           ),
         ),
-        Calendar(),
-        TrainingSchedule(),
+        Calendar(
+          onDaySelected: (selectedDay, focusedDay) {
+            setState(() {
+              this.selectedDay = selectedDay;
+            });
+            _fetchWorkouts(selectedDay);
+          },
+        ),
+        TrainingSchedule(workouts: workouts),
       ],
     );
   }
 }
 
 class Calendar extends StatelessWidget {
-  const Calendar({super.key});
+  final Function(DateTime, DateTime) onDaySelected;
+
+  const Calendar({super.key, required this.onDaySelected});
 
   @override
   Widget build(BuildContext context) {
@@ -55,34 +110,28 @@ class Calendar extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        onDaySelected: (selectedDay, focusedDay) {
-          // handle day selection
-        },
+        onDaySelected: onDaySelected,
       ),
     );
   }
 }
 
 class TrainingSchedule extends StatelessWidget {
-  const TrainingSchedule({super.key});
+  final List<ClientWorkout> workouts;
+
+  const TrainingSchedule({super.key, required this.workouts});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        TrainingScheduleCard(
-          title: 'Ноги + плечи',
-          time: '14:30 Тренировка #4',
-          trainer: 'Алина Колебанова',
-          imageUrl: 'https://example.com/training3.jpg',
-        ),
-        TrainingScheduleCard(
-          title: 'Йога вводное',
-          time: 'Тренировка #2',
-          trainer: null,
-          imageUrl: 'https://example.com/training4.jpg',
-        ),
-      ],
+    return Column(
+      children: workouts.map((workout) {
+        return TrainingScheduleCard(
+          title: workout.name,
+          time: workout.startDate.toIso8601String(),
+          trainer: 'Тренер', // Adjust as necessary
+          imageUrl: 'https://example.com/training.jpg', // Placeholder
+        );
+      }).toList(),
     );
   }
 }
