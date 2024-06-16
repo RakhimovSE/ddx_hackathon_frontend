@@ -55,16 +55,30 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                 : Column(
                     children: [
                       Expanded(
-                        child: CupertinoListSection.insetGrouped(
-                          children: exercises.map((exercise) {
+                        child: ListView.builder(
+                          itemCount: exercises.length,
+                          itemBuilder: (context, index) {
+                            final exercise = exercises[index];
                             return CupertinoListTile(
-                              leading: Image.network(
-                                  'https://example.com/exercise.jpg'), // Placeholder for exercise image
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(24.0),
+                                child: Image.network(
+                                  'https://example.com/exercise.jpg', // Placeholder for exercise image
+                                  width: 48,
+                                  height: 48,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return const Icon(CupertinoIcons.photo);
+                                  },
+                                ),
+                              ),
                               title: Text(exerciseSetsDescription(exercise)),
                               subtitle: Text('${exercise.restTime} минут'),
                               trailing: const CupertinoListTileChevron(),
                             );
-                          }).toList(),
+                          },
                         ),
                       ),
                       Container(
