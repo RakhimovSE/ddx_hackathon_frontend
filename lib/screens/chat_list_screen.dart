@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'chat_screen.dart';
 
 class ChatListScreen extends StatelessWidget {
   const ChatListScreen({super.key});
@@ -8,7 +9,7 @@ class ChatListScreen extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Чаты'),
-        previousPageTitle: 'Назад',
+        previousPageTitle: 'Тренеры',
       ),
       child: SafeArea(
         child: Column(
@@ -31,7 +32,15 @@ class ChatListScreen extends StatelessWidget {
                       child: CupertinoButton(
                         padding: EdgeInsets.zero,
                         onPressed: () {
-                          // Добавьте действие при нажатии на чат
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => const ChatScreen(
+                                trainerName:
+                                    'Алина Колебанова', // Замените на фактическое имя
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
                           padding: const EdgeInsets.all(12.0),
@@ -71,10 +80,10 @@ class ChatListScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              const Expanded(
+                              Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                  children: const [
                                     Text(
                                       'Алина Колебанова', // Замените на фактическое имя
                                       style: TextStyle(
