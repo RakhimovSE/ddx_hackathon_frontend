@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'custom_image.dart';
+import '../custom_image.dart';
 
 class StoryWidget extends StatelessWidget {
   const StoryWidget({

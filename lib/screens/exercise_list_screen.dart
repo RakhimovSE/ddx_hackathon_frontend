@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import '../data/models/exercise.dart';
 import '../data/repositories/api_repository.dart';
-import '../widgets/exercise_list.dart';
+import '../widgets/exercise/exercise_list.dart';
 
 class ExerciseListScreen extends StatefulWidget {
   const ExerciseListScreen({super.key});

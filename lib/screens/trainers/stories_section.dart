@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../../widgets/stories_list.dart';
+import '../../widgets/stories/stories_list.dart';
 
 class StoriesSection extends StatelessWidget {
   const StoriesSection({super.key});

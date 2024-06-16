@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import '../data/models/user.dart';
-import '../screens/trainer_profile_screen.dart';
-import 'custom_image.dart';
+import '../../data/models/user.dart';
+import '../../screens/trainer_profile_screen.dart';
+import '../custom_image.dart';
 
 class TrainerCard extends StatelessWidget {
   const TrainerCard({

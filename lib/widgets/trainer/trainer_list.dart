@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../data/models/user.dart';
+import '../../data/models/user.dart';
 import 'trainer_card.dart';
 
 class TrainerList extends StatelessWidget {
