@@ -49,6 +49,7 @@ class ClientTrainingPlansSection extends StatelessWidget {
                     trainer: 'Тренер', // Placeholder, update as needed
                     progress: 0, // Placeholder, update as needed
                     imageUrl: '', // Placeholder, update as needed
+                    trainingPlanId: plan.id,
                   );
                 }).toList(),
               );
