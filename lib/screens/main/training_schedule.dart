@@ -11,13 +11,15 @@ class TrainingSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (workouts.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text(
-          'Тренировок на выбранную дату нет.',
-          style: TextStyle(
-            fontSize: 18,
-            color: CupertinoColors.systemGrey,
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            'У вас нет тренировок на этот день.',
+            style: TextStyle(
+              fontSize: 16,
+              color: CupertinoColors.systemGrey,
+            ),
           ),
         ),
       );
@@ -28,7 +30,7 @@ class TrainingSchedule extends StatelessWidget {
         String time = 'No time specified';
         final DateFormat formatter = DateFormat.Hm();
         time = formatter.format(workout.startDate);
-              return TrainingScheduleCard(
+        return TrainingScheduleCard(
           title: workout.name,
           time: time,
           trainer: 'Тренер', // Adjust as necessary
