@@ -59,19 +59,18 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                     itemBuilder: (context, index) {
                       final workout = workouts[index];
                       String formattedTime = 'No time specified';
-                      if (workout.startDate != null) {
-                        final DateFormat dateFormatter =
-                            DateFormat('d MMMM', 'ru');
-                        final DateFormat timeFormatter = DateFormat('HH:mm');
-                        formattedTime =
-                            '${dateFormatter.format(workout.startDate!.toLocal())}, ${timeFormatter.format(workout.startDate!.toLocal())}';
-                      }
-                      return TrainingScheduleCard(
+                      final DateFormat dateFormatter =
+                          DateFormat('d MMMM', 'ru');
+                      final DateFormat timeFormatter = DateFormat('HH:mm');
+                      formattedTime =
+                          '${dateFormatter.format(workout.startDate.toLocal())}, ${timeFormatter.format(workout.startDate.toLocal())}';
+                                          return TrainingScheduleCard(
                         title: workout.name,
                         time: formattedTime,
                         trainer: 'Тренер', // Adjust as necessary
                         imageUrl:
                             'https://example.com/training.jpg', // Placeholder
+                        clientWorkoutId: workout.id,
                       );
                     },
                   ),

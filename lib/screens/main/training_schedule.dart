@@ -35,6 +35,7 @@ class TrainingSchedule extends StatelessWidget {
           time: time,
           trainer: 'Тренер', // Adjust as necessary
           imageUrl: 'https://example.com/training.jpg', // Placeholder
+          clientWorkoutId: workout.id,
         );
       }).toList(),
     );

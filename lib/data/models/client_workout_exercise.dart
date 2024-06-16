@@ -3,7 +3,7 @@ import 'client_exercise_set.dart';
 
 part 'client_workout_exercise.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ClientWorkoutExercise {
   @JsonKey(name: 'ID')
   final int id;
@@ -15,7 +15,6 @@ class ClientWorkoutExercise {
   final List<ClientExerciseSet> sets;
   @JsonKey(name: 'rest_time')
   final int restTime;
-  @JsonKey(name: 'order')
   final int order;
   @JsonKey(name: 'start_date')
   final DateTime? startDate;

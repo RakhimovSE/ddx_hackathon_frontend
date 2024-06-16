@@ -123,13 +123,13 @@ class ApiRepository {
 
   Future<List<ClientWorkoutExercise>> fetchClientWorkoutExercises(
       int clientWorkoutId) async {
-    final response =
-        await http.get(Uri.parse('$baseUrl/client_workouts/$clientWorkoutId'));
+    final response = await http
+        .get(Uri.parse('$baseUrl/client_workouts/$clientWorkoutId/exercises'));
 
     if (response.statusCode == 200) {
-      List<dynamic> body = json.decode(response.body);
-      return body
-          .map((dynamic item) => ClientWorkoutExercise.fromJson(item))
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse
+          .map((exercise) => ClientWorkoutExercise.fromJson(exercise))
           .toList();
     } else {
       throw Exception('Failed to load client workout exercises');

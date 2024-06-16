@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'client_workout_exercise.dart';
 
 part 'client_workout.g.dart';
 
@@ -11,18 +10,13 @@ class ClientWorkout {
   final int clientTrainingPlanId;
   @JsonKey(name: 'workout_id')
   final int workoutId;
-  @JsonKey(name: 'name')
   final String name;
-  @JsonKey(name: 'description')
   final String description;
-  @JsonKey(name: 'Exercises')
-  final List<ClientWorkoutExercise> exercises;
-  @JsonKey(name: 'order')
   final int order;
   @JsonKey(name: 'start_date')
-  final DateTime? startDate;
+  final DateTime startDate;
   @JsonKey(name: 'end_date')
-  final DateTime? endDate;
+  final DateTime endDate;
   @JsonKey(name: 'planned_start_date')
   final DateTime? plannedStartDate;
   @JsonKey(name: 'planned_end_date')
@@ -34,10 +28,9 @@ class ClientWorkout {
     required this.workoutId,
     required this.name,
     required this.description,
-    required this.exercises,
     required this.order,
-    this.startDate,
-    this.endDate,
+    required this.startDate,
+    required this.endDate,
     this.plannedStartDate,
     this.plannedEndDate,
   });
