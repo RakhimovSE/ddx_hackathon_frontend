@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/trainer_bloc.dart';
-import '../../bloc/trainer_state.dart';
+import '../../bloc/trainer/trainer_bloc.dart';
+import '../../bloc/trainer/trainer_state.dart';
 import '../../widgets/trainer_list.dart';
 
 class TrainersListSection extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../models/training_plan.dart';
-import '../repositories/api_repository.dart';
+import '../../models/training_plan.dart';
+import '../../repositories/api_repository.dart';
 
 part 'training_plan_event.dart';
 part 'training_plan_state.dart';

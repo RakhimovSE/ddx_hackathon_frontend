@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc/client_trainer_bloc.dart';
-import '../../bloc/client_trainer_event.dart';
-import '../../bloc/trainer_bloc.dart';
-import '../../bloc/trainer_event.dart';
+import '../../bloc/client_trainer/client_trainer_bloc.dart';
+import '../../bloc/client_trainer/client_trainer_event.dart';
+import '../../bloc/trainer/trainer_bloc.dart';
+import '../../bloc/trainer/trainer_event.dart';
 import 'client_trainers_section.dart';
 import 'stories_section.dart';
 import 'trainers_list_section.dart';

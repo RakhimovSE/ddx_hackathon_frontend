@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../repositories/api_repository.dart';
+import '../../repositories/api_repository.dart';
 import 'trainer_event.dart';
 import 'trainer_state.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'bloc/client_trainer_bloc.dart';
-import 'bloc/trainer_bloc.dart';
+import 'bloc/client_trainer/client_trainer_bloc.dart';
+import 'bloc/trainer/trainer_bloc.dart';
 import 'env_config.dart';
 import 'repositories/api_repository.dart';
 import 'screens/home_screen.dart';
