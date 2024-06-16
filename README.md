@@ -1,16 +1,69 @@
-# ddx_hackathon_frontend
+# DDX Hackathon Frontend
 
-A new Flutter project.
+## Описание
 
-## Getting Started
+DDX Hackathon Frontend - это мобильное приложение, разработанное на Flutter для управления тренировочными планами и тренировками клиентов. Приложение позволяет пользователям просматривать и отслеживать свои тренировочные планы, выполнять упражнения и общаться с тренерами.
 
-This project is a starting point for a Flutter application.
+## Технологический стек
 
-A few resources to get you started if this is your first Flutter project:
+- **Flutter**: 3.22.1
+- **Dart**: 3.4.1
+- **Cupertino Widgets**: Для обеспечения нативного интерфейса в стиле iOS.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Основные зависимости
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **flutter_bloc**: ^8.0.1
+- **equatable**: ^2.0.3
+- **http**: ^1.2.1
+- **cupertino_icons**: ^1.0.6
+- **json_annotation**: ^4.9.0
+- **flutter_dotenv**: ^5.1.0
+- **shared_preferences**: ^2.2.3
+- **table_calendar**: ^3.1.2
+- **provider**: ^6.1.2
+- **intl**: ^0.19.0
+
+## Установка и настройка
+
+1. Установите Flutter, следуя инструкциям на [официальном сайте Flutter](https://flutter.dev/docs/get-started/install).
+2. Клонируйте репозиторий:
+   ```sh
+   git clone <URL репозитория>
+   ```
+3. Перейдите в директорию проекта:
+   ```sh
+   cd ddx_hackathon_frontend
+   ```
+4. Установите зависимости:
+   ```sh
+   flutter pub get
+   ```
+5. Переименуйте файлы `.env.debug.example` и `.env.release.example` в `.env.debug` и `.env.release` соответственно, и подставьте в них свои значения.
+
+## Запуск приложения
+
+1. Подключите устройство или эмулятор.
+2. Запустите приложение:
+   ```sh
+   flutter run
+   ```
+
+## Структура проекта
+
+- **lib/bloc**: Содержит блоки управления состоянием.
+- **lib/config**: Конфигурационные файлы.
+- **lib/data/models**: Модели данных.
+- **lib/data/repositories**: Репозитории для работы с API.
+- **lib/screens**: Экраны приложения.
+- **lib/widgets**: Виджеты, используемые в приложении.
+
+## Основные экраны
+
+- **MainScreen**: Главный экран приложения с обзором тренировочных планов и тренировок.
+- **WorkoutExercisesScreen**: Экран для отображения упражнений в выбранной тренировке.
+- **ChatListScreen**: Экран списка чатов для общения с тренерами.
+- **WorkoutSessionScreen**: Экран для выполнения и отслеживания текущей тренировки.
+
+## Ссылка на репозиторий бэкенда
+
+[Backend Repository](https://github.com/RakhimovSE/ddx_hackathon_backend)
