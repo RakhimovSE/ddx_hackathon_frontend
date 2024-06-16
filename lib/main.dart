@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:provider/provider.dart'; // Добавить эту строку
+import 'package:provider/provider.dart';
 import 'bloc/client_trainer/client_trainer_bloc.dart';
 import 'bloc/client_training_plan/client_training_plan_bloc.dart';
 import 'bloc/trainer/trainer_bloc.dart';
@@ -17,6 +18,7 @@ import 'dart:convert';
 Future<void> main() async {
   await EnvConfig.load();
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('ru', null);
   final prefs = await SharedPreferences.getInstance();
   final String? userJson = prefs.getString('user');
   final bool isLoggedIn = userJson != null;
