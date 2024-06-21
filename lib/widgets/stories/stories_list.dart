@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../bloc/client_trainer/client_trainer_bloc.dart';
+import '../../bloc/client_trainer/client_trainer_state.dart';
 import 'story_widget.dart';
 
 class StoriesList extends StatelessWidget {
@@ -6,31 +9,32 @@ class StoriesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: const [
-          StoryWidget(name: 'Rudy Fernandez', role: 'Manager', imageUrl: ''),
-          StoryWidget(name: 'Abigail Herrara', role: 'Designer', imageUrl: ''),
-          StoryWidget(name: 'Liz Ambridge', role: 'Manager', imageUrl: ''),
-          StoryWidget(
-            name: 'John Smith',
-            role: 'Developer',
-            imageUrl: '',
-          ),
-          StoryWidget(
-            name: 'Emily Johnson',
-            role: 'Tester',
-            imageUrl: '',
-          ),
-          StoryWidget(
-            name: 'Michael Davis',
-            role: 'Product Manager',
-            imageUrl: '',
-          ),
-        ],
-      ),
+    return BlocBuilder<ClientTrainerBloc, ClientTrainerState>(
+      builder: (context, state) {
+        if (state is ClientTrainerLoading) {
+          return const Center(child: CupertinoActivityIndicator());
+        } else if (state is ClientTrainerLoaded) {
+          return SizedBox(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: state.clientTrainers.map((trainer) {
+                String specialties = trainer.trainerProfile?.specialties
+                        .map((specialty) => specialty.name)
+                        .join(', ') ??
+                    'No specialties';
+                return StoryWidget(
+                  name: trainer.name,
+                  specialties: specialties,
+                  imageUrl: trainer.avatarUrl ?? '',
+                );
+              }).toList(),
+            ),
+          );
+        } else {
+          return const Center(child: Text('Failed to load trainers'));
+        }
+      },
     );
   }
 }

@@ -4,13 +4,13 @@ import '../custom_image.dart';
 class StoryWidget extends StatelessWidget {
   const StoryWidget({
     required this.name,
-    required this.role,
+    required this.specialties,
     required this.imageUrl,
     super.key,
   });
 
   final String name;
-  final String role;
+  final String specialties;
   final String imageUrl;
 
   @override
@@ -46,7 +46,7 @@ class StoryWidget extends StatelessWidget {
           ),
           Flexible(
             child: Text(
-              role,
+              specialties,
               style: const TextStyle(
                 fontSize: 12,
                 color: CupertinoColors.systemGrey,
