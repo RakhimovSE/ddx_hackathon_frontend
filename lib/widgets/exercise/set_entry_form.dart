@@ -56,11 +56,14 @@ class SetEntryForm extends StatelessWidget {
             },
           ),
           const SizedBox(height: 16),
-          CupertinoButton.filled(
-            onPressed: () => onNextSet(),
-            child: Text(isLastSetAndExercise
-                ? 'Завершить тренировку'
-                : 'Следующий подход'),
+          SizedBox(
+            width: double.infinity,
+            child: CupertinoButton.filled(
+              onPressed: () => onNextSet(),
+              child: Text(isLastSetAndExercise
+                  ? 'Завершить тренировку'
+                  : 'Следующий подход'),
+            ),
           ),
         ],
       ),
