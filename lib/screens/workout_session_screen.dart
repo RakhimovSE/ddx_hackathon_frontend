@@ -79,6 +79,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
               ExerciseDescription(
                 exercise: currentExercise,
                 currentSetIndex: currentSetIndex,
+                key: ValueKey(currentExerciseIndex), // This forces re-build
               ),
               SetEntryForm(
                 currentExercise: currentExercise,

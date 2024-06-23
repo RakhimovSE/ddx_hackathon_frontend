@@ -1,9 +1,9 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/models/client_workout_exercise.dart';
 
-class ExerciseDescription extends StatelessWidget {
+class ExerciseDescription extends StatefulWidget {
   final ClientWorkoutExercise exercise;
   final int currentSetIndex;
 
@@ -14,17 +14,58 @@ class ExerciseDescription extends StatelessWidget {
   });
 
   @override
+  _ExerciseDescriptionState createState() => _ExerciseDescriptionState();
+}
+
+class _ExerciseDescriptionState extends State<ExerciseDescription> {
+  int _currentImageIndex = 0;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startImageRotation();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void _startImageRotation() {
+    if (widget.exercise.exercise.photos.isNotEmpty) {
+      _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+        setState(() {
+          _currentImageIndex =
+              (_currentImageIndex + 1) % widget.exercise.exercise.photos.length;
+        });
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant ExerciseDescription oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.exercise != oldWidget.exercise) {
+      _currentImageIndex = 0;
+      _timer.cancel();
+      _startImageRotation();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildImageCarousel(exercise),
+        _buildImage(widget.exercise),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                exercise.exercise.name,
+                widget.exercise.exercise.name,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -32,7 +73,7 @@ class ExerciseDescription extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Рекомендуемый вес: ${exercise.sets.first.restTime} кг',
+                'Рекомендуемый вес: ${widget.exercise.sets.first.restTime} кг',
                 style: const TextStyle(
                   fontSize: 16,
                   color: CupertinoColors.systemGrey,
@@ -43,16 +84,21 @@ class ExerciseDescription extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildInfoColumn(
-                      exercise.exercise.unit == 'duration'
-                          ? 'Время\nнужно'
-                          : 'Повторений\nнужно',
-                      exercise.exercise.unit == 'duration'
-                          ? '${exercise.sets[currentSetIndex].duration} сек'
-                          : '${exercise.sets[currentSetIndex].reps}'),
-                  _buildInfoColumn('Время\nотдыха',
-                      '${exercise.sets[currentSetIndex].restTime} сек'),
-                  _buildInfoColumn('Подходов\nсделано',
-                      '${currentSetIndex + 1}/${exercise.sets.length}'),
+                    widget.exercise.exercise.unit == 'duration'
+                        ? 'Время\nнужно'
+                        : 'Повторений\nнужно',
+                    widget.exercise.exercise.unit == 'duration'
+                        ? '${widget.exercise.sets[widget.currentSetIndex].duration} сек'
+                        : '${widget.exercise.sets[widget.currentSetIndex].reps}',
+                  ),
+                  _buildInfoColumn(
+                    'Время\nотдыха',
+                    '${widget.exercise.sets[widget.currentSetIndex].restTime} сек',
+                  ),
+                  _buildInfoColumn(
+                    'Подходов\nсделано',
+                    '${widget.currentSetIndex + 1}/${widget.exercise.sets.length}',
+                  ),
                 ],
               ),
             ],
@@ -62,29 +108,18 @@ class ExerciseDescription extends StatelessWidget {
     );
   }
 
-  Widget _buildImageCarousel(ClientWorkoutExercise exercise) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: 200.0,
-        enlargeCenterPage: true,
-        enableInfiniteScroll: false,
-        initialPage: 0,
-      ),
-      items: exercise.exercise.photos.map((photo) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Image.network(
-              '${dotenv.env['API_URL']}/static/${photo.photoUrl}',
-              fit: BoxFit.cover,
-              width: 1000,
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace? stackTrace) {
-                return const Icon(CupertinoIcons.photo);
-              },
-            );
-          },
-        );
-      }).toList(),
+  Widget _buildImage(ClientWorkoutExercise exercise) {
+    if (exercise.exercise.photos.isEmpty) {
+      return const Icon(CupertinoIcons.photo);
+    }
+    return Image.network(
+      '${dotenv.env['API_URL']}/static/${exercise.exercise.photos[_currentImageIndex].photoUrl}',
+      fit: BoxFit.contain,
+      height: 250,
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return const Icon(CupertinoIcons.photo);
+      },
     );
   }
 
