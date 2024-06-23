@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../data/models/client_exercise_set.dart';
 import '../data/models/client_workout_exercise.dart';
+import '../data/repositories/api_repository.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
   final int clientWorkoutId;
@@ -22,6 +28,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
   late List<ClientWorkoutExercise> exercises;
   late int currentExerciseIndex;
   late int currentSetIndex;
+  late List<ClientWorkoutExercise> completedExercises;
 
   @override
   void initState() {
@@ -29,6 +36,30 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
     exercises = widget.exercises;
     currentExerciseIndex = 0;
     currentSetIndex = 0;
+    completedExercises = [];
+    _fetchExerciseSets();
+  }
+
+  Future<void> _fetchExerciseSets() async {
+    final apiRepository = context.read<ApiRepository>();
+    final exerciseId = exercises[currentExerciseIndex].exercise.id;
+
+    final prefs = await SharedPreferences.getInstance();
+    final userMap = prefs.getString('user');
+    if (userMap != null) {
+      final user = jsonDecode(userMap);
+      final clientId = user['ID'];
+
+      try {
+        final fetchedExercises = await apiRepository
+            .fetchClientCompletedExercises(clientId, exerciseId);
+        setState(() {
+          completedExercises = fetchedExercises;
+        });
+      } catch (e) {
+        print("Failed to load completed exercises: $e");
+      }
+    }
   }
 
   @override
@@ -94,80 +125,83 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Повторений',
-                    style: TextStyle(
+                  Text(
+                    currentExercise.exercise.unit == 'duration'
+                        ? 'Продолжительность (сек)'
+                        : 'Повторений',
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   CupertinoTextField(
-                    placeholder: 'Повторений',
+                    placeholder: currentExercise.exercise.unit == 'duration'
+                        ? 'Продолжительность (сек)'
+                        : 'Повторений',
                     onChanged: (value) {
-                      // обработка изменений повторений
+                      // обработка изменений количества повторений или продолжительности
                     },
                   ),
+                  const SizedBox(height: 16),
+                  CupertinoButton.filled(
+                    onPressed: _nextSet,
+                    child: Text(
+                      _isLastSetAndExercise()
+                          ? 'Завершить тренировку'
+                          : 'Следующий подход',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ...completedExercises.map((exercise) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 8.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: CupertinoColors.systemBackground,
+                            borderRadius: BorderRadius.circular(8.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color:
+                                    CupertinoColors.systemGrey.withOpacity(0.5),
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${exercise.exercise.name}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                exerciseSetsDescription(exercise),
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: CupertinoColors.systemGrey,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '${DateFormat('dd MMMM', 'ru').format(exercise.startDate ?? DateTime.now())} ${DateFormat('HH:mm').format(exercise.startDate ?? DateTime.now())}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: CupertinoColors.systemGrey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ))
                 ],
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: exercises.length,
-                itemBuilder: (context, index) {
-                  final exercise = exercises[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
-                        color: CupertinoColors.systemBackground,
-                        borderRadius: BorderRadius.circular(8.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: CupertinoColors.systemGrey.withOpacity(0.5),
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '#${index + 1} ${exercise.exercise.name}',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            exerciseSetsDescription(exercise),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: CupertinoColors.systemGrey,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '${DateFormat('dd MMMM', 'ru').format(exercise.plannedStartDate ?? DateTime.now())} ${DateFormat('HH:mm').format(exercise.plannedStartDate ?? DateTime.now())}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: CupertinoColors.systemGrey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            CupertinoButton.filled(
-              onPressed: _nextSet,
-              child: Text('Следующий подход'),
             ),
           ],
         ),
@@ -231,8 +265,17 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
       } else if (currentExerciseIndex < exercises.length - 1) {
         currentExerciseIndex++;
         currentSetIndex = 0;
+        _fetchExerciseSets(); // Fetch sets for the next exercise
+      } else {
+        // End of workout logic
+        print("Workout complete!");
       }
     });
+  }
+
+  bool _isLastSetAndExercise() {
+    return currentSetIndex == exercises[currentExerciseIndex].sets.length - 1 &&
+        currentExerciseIndex == exercises.length - 1;
   }
 
   String exerciseSetsDescription(ClientWorkoutExercise exercise) {

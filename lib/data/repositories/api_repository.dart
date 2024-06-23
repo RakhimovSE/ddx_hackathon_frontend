@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import '../models/client_exercise_set.dart';
 import '../models/client_training_plan.dart';
 import '../models/client_workout_exercise.dart';
 import '../models/user.dart';
@@ -133,6 +134,21 @@ class ApiRepository {
           .toList();
     } else {
       throw Exception('Failed to load client workout exercises');
+    }
+  }
+
+  Future<List<ClientWorkoutExercise>> fetchClientCompletedExercises(
+      int clientId, int exerciseId) async {
+    final response = await http
+        .get(Uri.parse('$baseUrl/clients/$clientId/exercise_sets/$exerciseId'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse
+          .map((exercise) => ClientWorkoutExercise.fromJson(exercise))
+          .toList();
+    } else {
+      throw Exception('Failed to load client exercise sets');
     }
   }
 }
