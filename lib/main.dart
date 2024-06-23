@@ -77,6 +77,7 @@ class DDXApp extends StatelessWidget {
       child: CupertinoApp(
         title: 'DDX Hackathon',
         theme: const CupertinoThemeData(
+          brightness: Brightness.light,
           primaryColor: CupertinoColors.systemBlue,
         ),
         home:
