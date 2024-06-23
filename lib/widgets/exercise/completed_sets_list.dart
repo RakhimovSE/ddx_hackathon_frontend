@@ -7,9 +7,9 @@ class CompletedSetsList extends StatelessWidget {
   final List<ClientWorkoutExercise> completedExercises;
 
   const CompletedSetsList({
-    Key? key,
+    super.key,
     required this.completedExercises,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class CompletedSetsList extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 8),
-            ...exercise.sets.map((set) => _buildSetRow(set, exercise)).toList(),
+            ...exercise.sets.map((set) => _buildSetRow(set, exercise)),
           ],
         ),
       ),
