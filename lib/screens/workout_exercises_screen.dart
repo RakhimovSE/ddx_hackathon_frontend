@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/models/client_workout_exercise.dart';
 import '../../data/repositories/api_repository.dart';
+import 'workout_session_screen.dart';
 
 class WorkoutExercisesScreen extends StatefulWidget {
   final int clientWorkoutId;
@@ -63,7 +65,9 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                               leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(24.0),
                                 child: Image.network(
-                                  'https://example.com/exercise.jpg', // Placeholder for exercise image
+                                  exercise.exercise.photos.isNotEmpty
+                                      ? '${dotenv.env['API_URL']}/static/${exercise.exercise.photos.first.photoUrl}'
+                                      : 'https://example.com/default.jpg', // URL по умолчанию для упражнений без фото
                                   width: 48,
                                   height: 48,
                                   fit: BoxFit.cover,
@@ -74,7 +78,7 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                                   },
                                 ),
                               ),
-                              title: Text(exerciseSetsDescription(exercise)),
+                              title: Text(exercise.exercise.name),
                               subtitle: Text('${exercise.restTime} минут'),
                               trailing: const CupertinoListTileChevron(),
                             );

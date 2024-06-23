@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'exercise.dart';
 import 'client_exercise_set.dart';
 
 part 'client_workout_exercise.g.dart';
@@ -9,8 +10,8 @@ class ClientWorkoutExercise {
   final int id;
   @JsonKey(name: 'client_workout_id')
   final int clientWorkoutId;
-  @JsonKey(name: 'workout_exercise_id')
-  final int workoutExerciseId;
+  @JsonKey(name: 'exercise_id')
+  final int exerciseId;
   @JsonKey(name: 'Sets')
   final List<ClientExerciseSet> sets;
   @JsonKey(name: 'rest_time')
@@ -24,11 +25,13 @@ class ClientWorkoutExercise {
   final DateTime? plannedStartDate;
   @JsonKey(name: 'planned_end_date')
   final DateTime? plannedEndDate;
+  @JsonKey(name: 'exercise')
+  final Exercise exercise;
 
   ClientWorkoutExercise({
     required this.id,
     required this.clientWorkoutId,
-    required this.workoutExerciseId,
+    required this.exerciseId,
     required this.sets,
     required this.restTime,
     required this.order,
@@ -36,6 +39,7 @@ class ClientWorkoutExercise {
     this.endDate,
     this.plannedStartDate,
     this.plannedEndDate,
+    required this.exercise,
   });
 
   factory ClientWorkoutExercise.fromJson(Map<String, dynamic> json) =>

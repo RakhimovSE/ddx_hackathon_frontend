@@ -26,6 +26,8 @@ Exercise _$ExerciseFromJson(Map<String, dynamic> json) => Exercise(
       photos: (json['photos'] as List<dynamic>)
           .map((e) => ExercisePhoto.fromJson(e as Map<String, dynamic>))
           .toList(),
+      unit: json['unit'] as String,
+      sourceType: json['source_type'] as String,
     );
 
 Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
@@ -40,6 +42,8 @@ Map<String, dynamic> _$ExerciseToJson(Exercise instance) => <String, dynamic>{
           instance.additionalMuscles.map((e) => e.toJson()).toList(),
       'Equipments': instance.equipments.map((e) => e.toJson()).toList(),
       'photos': instance.photos.map((e) => e.toJson()).toList(),
+      'unit': instance.unit,
+      'source_type': instance.sourceType,
     };
 
 ExerciseType _$ExerciseTypeFromJson(Map<String, dynamic> json) => ExerciseType(

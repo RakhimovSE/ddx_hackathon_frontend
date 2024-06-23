@@ -20,6 +20,9 @@ class Exercise {
   @JsonKey(name: 'Equipments')
   final List<Equipment> equipments;
   final List<ExercisePhoto> photos;
+  final String unit;
+  @JsonKey(name: 'source_type')
+  final String sourceType;
 
   Exercise({
     required this.id,
@@ -32,6 +35,8 @@ class Exercise {
     required this.additionalMuscles,
     required this.equipments,
     required this.photos,
+    required this.unit,
+    required this.sourceType,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) =>
