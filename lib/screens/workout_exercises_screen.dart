@@ -92,7 +92,15 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                         width: double.infinity,
                         child: CupertinoButton.filled(
                           onPressed: () {
-                            // Start workout action
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => WorkoutSessionScreen(
+                                  clientWorkoutId: widget.clientWorkoutId,
+                                  exercises: exercises,
+                                ),
+                              ),
+                            );
                           },
                           child: const Text('Начать тренировку'),
                         ),
