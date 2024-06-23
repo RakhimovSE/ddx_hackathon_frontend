@@ -2,10 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../data/models/client_exercise_set.dart';
 import '../data/models/client_workout_exercise.dart';
 import '../data/repositories/api_repository.dart';
 import '../widgets/exercise/exercise_description.dart';
@@ -79,7 +76,10 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ExerciseDescription(exercise: currentExercise),
+              ExerciseDescription(
+                exercise: currentExercise,
+                currentSetIndex: currentSetIndex,
+              ),
               SetEntryForm(
                 currentExercise: currentExercise,
                 currentSetIndex: currentSetIndex,

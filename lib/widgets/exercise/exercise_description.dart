@@ -5,8 +5,13 @@ import '../../data/models/client_workout_exercise.dart';
 
 class ExerciseDescription extends StatelessWidget {
   final ClientWorkoutExercise exercise;
+  final int currentSetIndex;
 
-  const ExerciseDescription({super.key, required this.exercise});
+  const ExerciseDescription({
+    super.key,
+    required this.exercise,
+    required this.currentSetIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +43,16 @@ class ExerciseDescription extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildInfoColumn(
-                      'Повторений\nнужно', '${exercise.sets.first.reps}'),
-                  _buildInfoColumn('Время\nотдыха', '${exercise.restTime} сек'),
-                  _buildInfoColumn(
-                      'Подходов\nсделано', '0/${exercise.sets.length}'),
+                      exercise.exercise.unit == 'duration'
+                          ? 'Время\nнужно'
+                          : 'Повторений\nнужно',
+                      exercise.exercise.unit == 'duration'
+                          ? '${exercise.sets[currentSetIndex].duration} сек'
+                          : '${exercise.sets[currentSetIndex].reps}'),
+                  _buildInfoColumn('Время\nотдыха',
+                      '${exercise.sets[currentSetIndex].restTime} сек'),
+                  _buildInfoColumn('Подходов\nсделано',
+                      '${currentSetIndex + 1}/${exercise.sets.length}'),
                 ],
               ),
             ],
