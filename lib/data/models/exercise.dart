@@ -21,6 +21,8 @@ class Exercise {
   final List<Equipment> equipments;
   final List<ExercisePhoto> photos;
   final String unit;
+  @JsonKey(name: 'need_weight')
+  final bool needWeight;
   @JsonKey(name: 'source_type')
   final String sourceType;
 
@@ -36,6 +38,7 @@ class Exercise {
     required this.equipments,
     required this.photos,
     required this.unit,
+    required this.needWeight,
     required this.sourceType,
   });
 
