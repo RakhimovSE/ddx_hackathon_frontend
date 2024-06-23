@@ -26,6 +26,7 @@ ClientTrainingPlan _$ClientTrainingPlanFromJson(Map<String, dynamic> json) =>
       plannedEndDate: json['planned_end_date'] == null
           ? null
           : DateTime.parse(json['planned_end_date'] as String),
+      createdBy: User.fromJson(json['created_by'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ClientTrainingPlanToJson(ClientTrainingPlan instance) =>
@@ -42,4 +43,5 @@ Map<String, dynamic> _$ClientTrainingPlanToJson(ClientTrainingPlan instance) =>
       'end_date': instance.endDate.toIso8601String(),
       'planned_start_date': instance.plannedStartDate?.toIso8601String(),
       'planned_end_date': instance.plannedEndDate?.toIso8601String(),
+      'created_by': instance.createdBy.toJson(),
     };

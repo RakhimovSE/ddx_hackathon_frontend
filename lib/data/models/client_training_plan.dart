@@ -1,8 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'user.dart';
 
 part 'client_training_plan.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class ClientTrainingPlan {
   @JsonKey(name: 'ID')
   final int id;
@@ -37,6 +38,9 @@ class ClientTrainingPlan {
   @JsonKey(name: 'planned_end_date')
   final DateTime? plannedEndDate;
 
+  @JsonKey(name: 'created_by')
+  final User createdBy;
+
   ClientTrainingPlan({
     required this.id,
     required this.createdAt,
@@ -50,6 +54,7 @@ class ClientTrainingPlan {
     required this.endDate,
     this.plannedStartDate,
     this.plannedEndDate,
+    required this.createdBy,
   });
 
   factory ClientTrainingPlan.fromJson(Map<String, dynamic> json) =>

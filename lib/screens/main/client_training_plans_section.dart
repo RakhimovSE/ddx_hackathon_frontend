@@ -46,7 +46,7 @@ class ClientTrainingPlansSection extends StatelessWidget {
                   return TrainingCard(
                     title: plan.name,
                     subtitle: plan.description,
-                    trainer: 'Тренер', // Placeholder, update as needed
+                    trainer: plan.createdBy.name,
                     progress: 0, // Placeholder, update as needed
                     imageUrl: '', // Placeholder, update as needed
                     trainingPlanId: plan.id,
