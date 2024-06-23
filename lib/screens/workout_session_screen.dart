@@ -69,8 +69,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: Text(
-            '${currentExerciseIndex + 1}/${exercises.length} упражнений выполнено'),
+        middle: Text('${currentExerciseIndex + 1}/${exercises.length}'),
         previousPageTitle: 'Назад',
       ),
       child: SafeArea(
@@ -80,7 +79,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
               ExerciseDescription(
                 exercise: currentExercise,
                 currentSetIndex: currentSetIndex,
-                key: ValueKey(currentExerciseIndex), // This forces re-build
+                key: ValueKey(currentExerciseIndex),
               ),
               SetEntryForm(
                 currentExercise: currentExercise,
@@ -103,7 +102,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
       } else if (currentExerciseIndex < exercises.length - 1) {
         currentExerciseIndex++;
         currentSetIndex = 0;
-        _fetchExerciseSets(); // Fetch sets for the next exercise
+        _fetchExerciseSets();
       } else {
         Navigator.pushAndRemoveUntil(
           context,

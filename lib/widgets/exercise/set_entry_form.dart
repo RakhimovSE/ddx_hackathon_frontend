@@ -22,38 +22,56 @@ class SetEntryForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Килограмм',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          CupertinoTextField(
-            placeholder: 'Килограмм',
-            onChanged: (value) {
-              // обработка изменений веса
-            },
-          ),
-          const SizedBox(height: 16),
-          Text(
-            currentExercise.exercise.unit == 'duration'
-                ? 'Продолжительность (сек)'
-                : 'Повторений',
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          CupertinoTextField(
-            placeholder: currentExercise.exercise.unit == 'duration'
-                ? 'Продолжительность (сек)'
-                : 'Повторений',
-            onChanged: (value) {
-              // обработка изменений количества повторений или продолжительности
-            },
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Вес (кг)',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    CupertinoTextField(
+                      placeholder: 'Вес (кг)',
+                      onChanged: (value) {
+                        // обработка изменений веса
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      currentExercise.exercise.unit == 'duration'
+                          ? 'Время (сек)'
+                          : 'Повторений',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    CupertinoTextField(
+                      placeholder: currentExercise.exercise.unit == 'duration'
+                          ? 'Время (сек)'
+                          : 'Повторений',
+                      onChanged: (value) {
+                        // обработка изменений количества повторений или продолжительности
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           SizedBox(
