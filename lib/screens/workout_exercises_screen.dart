@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/models/client_workout_exercise.dart';
 import '../../data/repositories/api_repository.dart';
 import '../data/models/exercise.dart';
+import 'exercise_detail_screen.dart';
 import 'workout_session_screen.dart';
 
 class WorkoutExercisesScreen extends StatefulWidget {
@@ -62,27 +63,39 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                           itemCount: exercises.length,
                           itemBuilder: (context, index) {
                             final exercise = exercises[index];
-                            return CupertinoListTile(
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(24.0),
-                                child: Image.network(
-                                  exercise.exercise.photos.isNotEmpty
-                                      ? '${dotenv.env['API_URL']}/static/${exercise.exercise.photos.first.photoUrl}'
-                                      : 'https://example.com/default.jpg',
-                                  width: 48,
-                                  height: 48,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return const Icon(CupertinoIcons.photo);
-                                  },
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => ExerciseDetailScreen(
+                                      exercise: exercise,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: CupertinoListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  child: Image.network(
+                                    exercise.exercise.photos.isNotEmpty
+                                        ? '${dotenv.env['API_URL']}/static/${exercise.exercise.photos.first.photoUrl}'
+                                        : 'https://example.com/default.jpg',
+                                    width: 48,
+                                    height: 48,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                        Object exception,
+                                        StackTrace? stackTrace) {
+                                      return const Icon(CupertinoIcons.photo);
+                                    },
+                                  ),
                                 ),
+                                title: Text(exercise.exercise.name),
+                                subtitle: Text(
+                                    '${exerciseEquipmentsDescription(exercise.exercise)}. ${exerciseSetsDescription(exercise)}'),
+                                trailing: const CupertinoListTileChevron(),
                               ),
-                              title: Text(exercise.exercise.name),
-                              subtitle: Text(
-                                  '${exerciseEquipmentsDescription(exercise.exercise)}. ${exerciseSetsDescription(exercise)}'),
-                              trailing: const CupertinoListTileChevron(),
                             );
                           },
                         ),
@@ -122,10 +135,6 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
   }
 
   String exerciseEquipmentsDescription(Exercise exercise) {
-    if (exercise.equipments.isEmpty ||
-        exercise.equipments.first.name == 'Отсутствует') {
-      return 'Без оборудования';
-    }
     return exercise.equipments.map((e) => e.name).join(', ');
   }
 }
