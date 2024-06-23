@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/models/client_workout_exercise.dart';
 import '../../data/repositories/api_repository.dart';
+import '../data/models/exercise.dart';
 import 'workout_session_screen.dart';
 
 class WorkoutExercisesScreen extends StatefulWidget {
@@ -67,7 +68,7 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                                 child: Image.network(
                                   exercise.exercise.photos.isNotEmpty
                                       ? '${dotenv.env['API_URL']}/static/${exercise.exercise.photos.first.photoUrl}'
-                                      : 'https://example.com/default.jpg', // URL по умолчанию для упражнений без фото
+                                      : 'https://example.com/default.jpg',
                                   width: 48,
                                   height: 48,
                                   fit: BoxFit.cover,
@@ -79,7 +80,8 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                                 ),
                               ),
                               title: Text(exercise.exercise.name),
-                              subtitle: Text('${exercise.restTime} минут'),
+                              subtitle: Text(
+                                  '${exerciseEquipmentsDescription(exercise.exercise)}. ${exerciseSetsDescription(exercise)}'),
                               trailing: const CupertinoListTileChevron(),
                             );
                           },
@@ -102,9 +104,20 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
   }
 
   String exerciseSetsDescription(ClientWorkoutExercise exercise) {
-    return exercise.sets
-        .map((set) =>
-            '${set.reps}x${set.duration > 0 ? '${set.duration}сек' : ''}${set.restTime > 0 ? 'x${set.restTime}кг' : ''}')
-        .join(', ');
+    return exercise.sets.map((set) {
+      if (set.duration > 0) {
+        return '${set.duration} сек';
+      } else {
+        return '${set.reps} раз';
+      }
+    }).join(', ');
+  }
+
+  String exerciseEquipmentsDescription(Exercise exercise) {
+    if (exercise.equipments.isEmpty ||
+        exercise.equipments.first.name == 'Отсутствует') {
+      return 'Без оборудования';
+    }
+    return exercise.equipments.map((e) => e.name).join(', ');
   }
 }
