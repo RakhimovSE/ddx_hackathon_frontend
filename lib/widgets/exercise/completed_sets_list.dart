@@ -50,21 +50,21 @@ class CompletedSetsList extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 8),
-            ...exercise.sets.map((set) => _buildSetRow(set)).toList(),
+            ...exercise.sets.map((set) => _buildSetRow(set, exercise)).toList(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSetRow(ClientExerciseSet set) {
+  Widget _buildSetRow(ClientExerciseSet set, ClientWorkoutExercise exercise) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '#${set.order + 1} ${set.restTime} кг x ${set.reps} повторов',
+            '#${set.order + 1}. 15 кг x ${exercise.exercise.unit == 'duration' ? '${set.duration} сек' : '${set.reps} повторов'}',
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
