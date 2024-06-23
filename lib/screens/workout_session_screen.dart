@@ -8,6 +8,7 @@ import '../data/repositories/api_repository.dart';
 import '../widgets/exercise/exercise_description.dart';
 import '../widgets/exercise/set_entry_form.dart';
 import '../widgets/exercise/completed_sets_list.dart';
+import 'main/main_screen.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
   final int clientWorkoutId;
@@ -104,8 +105,11 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
         currentSetIndex = 0;
         _fetchExerciseSets(); // Fetch sets for the next exercise
       } else {
-        // End of workout logic
-        print("Workout complete!");
+        Navigator.pushAndRemoveUntil(
+          context,
+          CupertinoPageRoute(builder: (context) => const MainScreen()),
+          (Route<dynamic> route) => false,
+        );
       }
     });
   }
