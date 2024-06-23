@@ -27,16 +27,16 @@ class ClientTrainingPlan {
   final String description;
 
   @JsonKey(name: 'start_date')
-  final DateTime startDate;
+  final DateTime? startDate;
 
   @JsonKey(name: 'end_date')
-  final DateTime endDate;
+  final DateTime? endDate;
 
   @JsonKey(name: 'planned_start_date')
-  final DateTime? plannedStartDate;
+  final DateTime plannedStartDate;
 
   @JsonKey(name: 'planned_end_date')
-  final DateTime? plannedEndDate;
+  final DateTime plannedEndDate;
 
   @JsonKey(name: 'created_by')
   final User createdBy;
@@ -50,10 +50,10 @@ class ClientTrainingPlan {
     required this.trainingPlanId,
     required this.name,
     required this.description,
-    required this.startDate,
-    required this.endDate,
-    this.plannedStartDate,
-    this.plannedEndDate,
+    this.startDate,
+    this.endDate,
+    required this.plannedStartDate,
+    required this.plannedEndDate,
     required this.createdBy,
   });
 
