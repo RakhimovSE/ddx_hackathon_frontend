@@ -14,13 +14,13 @@ class ClientWorkout {
   final String description;
   final int order;
   @JsonKey(name: 'start_date')
-  final DateTime startDate;
+  final DateTime? startDate;
   @JsonKey(name: 'end_date')
-  final DateTime endDate;
+  final DateTime? endDate;
   @JsonKey(name: 'planned_start_date')
-  final DateTime? plannedStartDate;
+  final DateTime plannedStartDate;
   @JsonKey(name: 'planned_end_date')
-  final DateTime? plannedEndDate;
+  final DateTime plannedEndDate;
 
   ClientWorkout({
     required this.id,
@@ -29,10 +29,10 @@ class ClientWorkout {
     required this.name,
     required this.description,
     required this.order,
-    required this.startDate,
-    required this.endDate,
-    this.plannedStartDate,
-    this.plannedEndDate,
+    this.startDate,
+    this.endDate,
+    required this.plannedStartDate,
+    required this.plannedEndDate,
   });
 
   factory ClientWorkout.fromJson(Map<String, dynamic> json) =>

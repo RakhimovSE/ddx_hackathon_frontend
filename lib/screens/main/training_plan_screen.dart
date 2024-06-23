@@ -63,8 +63,8 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                           DateFormat('d MMMM', 'ru');
                       final DateFormat timeFormatter = DateFormat('HH:mm');
                       formattedTime =
-                          '${dateFormatter.format(workout.startDate.toLocal())}, ${timeFormatter.format(workout.startDate.toLocal())}';
-                                          return TrainingScheduleCard(
+                          '${dateFormatter.format(workout.plannedStartDate.toLocal())}, ${timeFormatter.format(workout.plannedStartDate.toLocal())}';
+                      return TrainingScheduleCard(
                         title: workout.name,
                         time: formattedTime,
                         trainer: 'Тренер', // Adjust as necessary
