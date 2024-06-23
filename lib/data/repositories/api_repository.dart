@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import '../models/client_exercise_set.dart';
 import '../models/client_training_plan.dart';
 import '../models/client_workout_exercise.dart';
 import '../models/user.dart';

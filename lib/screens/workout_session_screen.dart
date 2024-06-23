@@ -2,13 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../data/models/client_exercise_set.dart';
 import '../data/models/client_workout_exercise.dart';
 import '../data/repositories/api_repository.dart';
+import '../widgets/exercise/exercise_description.dart';
+import '../widgets/exercise/set_entry_form.dart';
+import '../widgets/exercise/completed_sets_list.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
   final int clientWorkoutId;
@@ -76,185 +75,17 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
       child: SafeArea(
         child: Column(
           children: [
-            _buildImageCarousel(currentExercise),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    currentExercise.exercise.name,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Рекомендуемый вес: ${currentSet.restTime} кг',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: CupertinoColors.systemGrey,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildInfoColumn(
-                          'Повторений\nнужно', '${currentSet.reps}'),
-                      _buildInfoColumn(
-                          'Время\nотдыха', '${currentExercise.restTime} сек'),
-                      _buildInfoColumn('Подходов\nсделано',
-                          '${currentSetIndex + 1}/${currentExercise.sets.length}'),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Килограмм',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  CupertinoTextField(
-                    placeholder: 'Килограмм',
-                    onChanged: (value) {
-                      // обработка изменений веса
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    currentExercise.exercise.unit == 'duration'
-                        ? 'Продолжительность (сек)'
-                        : 'Повторений',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  CupertinoTextField(
-                    placeholder: currentExercise.exercise.unit == 'duration'
-                        ? 'Продолжительность (сек)'
-                        : 'Повторений',
-                    onChanged: (value) {
-                      // обработка изменений количества повторений или продолжительности
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  CupertinoButton.filled(
-                    onPressed: _nextSet,
-                    child: Text(
-                      _isLastSetAndExercise()
-                          ? 'Завершить тренировку'
-                          : 'Следующий подход',
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ...completedExercises.map((exercise) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(12.0),
-                          decoration: BoxDecoration(
-                            color: CupertinoColors.systemBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    CupertinoColors.systemGrey.withOpacity(0.5),
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${exercise.exercise.name}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                exerciseSetsDescription(exercise),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: CupertinoColors.systemGrey,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${DateFormat('dd MMMM', 'ru').format(exercise.startDate ?? DateTime.now())} ${DateFormat('HH:mm').format(exercise.startDate ?? DateTime.now())}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: CupertinoColors.systemGrey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ))
-                ],
-              ),
+            ExerciseDescription(exercise: currentExercise),
+            SetEntryForm(
+              currentExercise: currentExercise,
+              currentSetIndex: currentSetIndex,
+              onNextSet: _nextSet,
+              isLastSetAndExercise: _isLastSetAndExercise(),
             ),
+            CompletedSetsList(completedExercises: completedExercises),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildInfoColumn(String title, String value) {
-    return Column(
-      children: [
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 14,
-            color: CupertinoColors.systemGrey,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildImageCarousel(ClientWorkoutExercise exercise) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: 200.0,
-        enlargeCenterPage: true,
-        enableInfiniteScroll: false,
-        initialPage: 0,
-      ),
-      items: exercise.exercise.photos.map((photo) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Image.network(
-              '${dotenv.env['API_URL']}/static/${photo.photoUrl}',
-              fit: BoxFit.cover,
-              width: 1000,
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace? stackTrace) {
-                return const Icon(CupertinoIcons.photo);
-              },
-            );
-          },
-        );
-      }).toList(),
     );
   }
 
@@ -276,15 +107,5 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
   bool _isLastSetAndExercise() {
     return currentSetIndex == exercises[currentExerciseIndex].sets.length - 1 &&
         currentExerciseIndex == exercises.length - 1;
-  }
-
-  String exerciseSetsDescription(ClientWorkoutExercise exercise) {
-    return exercise.sets.map((set) {
-      if (set.duration > 0) {
-        return '${set.duration} сек';
-      } else {
-        return '${set.reps} раз';
-      }
-    }).join(', ');
   }
 }
