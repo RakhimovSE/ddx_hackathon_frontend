@@ -12,7 +12,6 @@ class MainScreen extends StatelessWidget {
       GlobalKey<WeeklyTrainingsSectionState> weeklyTrainingsKey) async {
     context.read<ClientTrainingPlanBloc>().add(FetchClientTrainingPlans());
     await weeklyTrainingsKey.currentState?.fetchWorkoutsForSelectedDay();
-    await Future.delayed(const Duration(seconds: 1));
   }
 
   @override
