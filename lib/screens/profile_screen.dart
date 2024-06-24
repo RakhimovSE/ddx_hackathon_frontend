@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
-        middle: Text('Profile'),
+        middle: Text('Настройки'),
       ),
       child: SafeArea(
         child: ListView(

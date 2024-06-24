@@ -20,16 +20,16 @@ class HomeScreen extends StatelessWidget {
             label: 'Главная',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person_2_fill),
+            icon: Icon(CupertinoIcons.person_2),
             label: 'Тренеры',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.list_bullet),
+            icon: Icon(CupertinoIcons.chart_bar),
             label: 'Прогресс',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person),
-            label: 'Профиль',
+            icon: Icon(CupertinoIcons.settings),
+            label: 'Настройки',
           ),
         ],
       ),
