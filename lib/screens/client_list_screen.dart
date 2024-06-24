@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../data/repositories/api_repository.dart';
 import 'chat_list_screen.dart';
+import '../bloc/trainer_clients/trainer_clients_bloc.dart';
+import '../bloc/trainer_clients/trainer_clients_event.dart';
+import '../bloc/trainer_clients/trainer_clients_state.dart';
 
 class ClientListScreen extends StatelessWidget {
   const ClientListScreen({super.key});
@@ -56,19 +60,34 @@ class ClientListScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView(
-                children: [
-                  _buildClientTile(
-                    context,
-                    'Клиент Платежович',
-                    'https://example.com/client1.jpg',
-                  ),
-                  _buildClientTile(
-                    context,
-                    'Рубль Кредитович',
-                    'https://example.com/client2.jpg',
-                  ),
-                ],
+              child: BlocProvider(
+                create: (context) => TrainerClientsBloc(
+                  apiRepository: context.read<ApiRepository>(),
+                )..add(FetchTrainerClients()),
+                child: BlocBuilder<TrainerClientsBloc, TrainerClientsState>(
+                  builder: (context, state) {
+                    if (state is TrainerClientsLoading) {
+                      return const Center(child: CupertinoActivityIndicator());
+                    } else if (state is TrainerClientsLoaded) {
+                      return ListView.builder(
+                        itemCount: state.clients.length,
+                        itemBuilder: (context, index) {
+                          final client = state.clients[index];
+                          return _buildClientTile(
+                            context,
+                            client.name,
+                            client.avatarUrl ??
+                                'https://via.placeholder.com/50',
+                          );
+                        },
+                      );
+                    } else if (state is TrainerClientsError) {
+                      return Center(child: Text(state.message));
+                    } else {
+                      return const Center(child: Text('Нет данных'));
+                    }
+                  },
+                ),
               ),
             ),
           ],
@@ -103,13 +122,7 @@ class ClientListScreen extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
-                return Container(
-                  width: 50,
-                  height: 50,
-                  color: CupertinoColors.systemGrey,
-                  child: const Icon(CupertinoIcons.person,
-                      color: CupertinoColors.white),
-                );
+                return const Icon(CupertinoIcons.person);
               },
             ),
           ),
