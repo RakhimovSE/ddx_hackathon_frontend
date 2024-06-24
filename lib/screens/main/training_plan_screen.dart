@@ -89,7 +89,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
           Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: CupertinoColors.systemGrey5,
+              color: CupertinoColors.systemGrey,
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: Column(
