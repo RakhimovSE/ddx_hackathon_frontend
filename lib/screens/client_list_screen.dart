@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/repositories/api_repository.dart';
 import 'chat_list_screen.dart';
+import 'client_detail_screen.dart';
 import '../bloc/trainer_clients/trainer_clients_bloc.dart';
 import '../bloc/trainer_clients/trainer_clients_event.dart';
 import '../bloc/trainer_clients/trainer_clients_state.dart';
+import '../data/models/user.dart';
 
 class ClientListScreen extends StatelessWidget {
   const ClientListScreen({super.key});
@@ -75,9 +77,7 @@ class ClientListScreen extends StatelessWidget {
                           final client = state.clients[index];
                           return _buildClientTile(
                             context,
-                            client.name,
-                            client.avatarUrl ??
-                                'https://via.placeholder.com/50',
+                            client,
                           );
                         },
                       );
@@ -96,48 +96,58 @@ class ClientListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildClientTile(BuildContext context, String name, String imageUrl) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: CupertinoColors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            color: CupertinoColors.systemGrey.withOpacity(0.5),
-            blurRadius: 5.0,
-            offset: const Offset(0, 3),
+  Widget _buildClientTile(BuildContext context, User client) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (context) => ClientDetailScreen(client: client),
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              imageUrl,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace? stackTrace) {
-                return const Icon(CupertinoIcons.person);
-              },
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          color: CupertinoColors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: CupertinoColors.systemGrey.withOpacity(0.5),
+              blurRadius: 5.0,
+              offset: const Offset(0, 3),
             ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              name,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                client.avatarUrl ?? 'https://via.placeholder.com/50',
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return const Icon(CupertinoIcons.person);
+                },
               ),
             ),
-          ),
-          const Icon(CupertinoIcons.chevron_forward),
-        ],
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                client.name,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const Icon(CupertinoIcons.chevron_forward),
+          ],
+        ),
       ),
     );
   }
