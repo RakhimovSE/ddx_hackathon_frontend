@@ -8,6 +8,7 @@ import '../data/repositories/api_repository.dart';
 import '../widgets/exercise/exercise_description.dart';
 import '../widgets/exercise/set_entry_form.dart';
 import '../widgets/exercise/completed_sets_list.dart';
+import 'exercise_detail_screen.dart';
 import 'main/main_screen.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
@@ -71,6 +72,18 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
       navigationBar: CupertinoNavigationBar(
         middle: Text('${currentExerciseIndex + 1}/${exercises.length}'),
         previousPageTitle: 'Назад',
+        trailing: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => ExerciseDetailScreen(
+                    exercise: exercises[currentExerciseIndex]),
+              ),
+            );
+          },
+          child: Icon(CupertinoIcons.question_circle),
+        ),
       ),
       child: SafeArea(
         child: SingleChildScrollView(
