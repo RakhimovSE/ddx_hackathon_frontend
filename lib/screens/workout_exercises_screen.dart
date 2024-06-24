@@ -60,24 +60,27 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                 ? const Center(child: Text('Упражнений нет'))
                 : Column(
                     children: [
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '#1 Грудь + плечи',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                      const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              '#1 Грудь + плечи',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '~ 45 минут',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: CupertinoColors.systemGrey,
-                            ),
-                          ),
-                        ],
+                            SizedBox(height: 8),
+                            Text(
+                              '~ 45 минут',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: CupertinoColors.systemGrey,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       Expanded(
                         child: ListView.builder(
