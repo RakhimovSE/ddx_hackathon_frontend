@@ -9,6 +9,7 @@ import 'bloc/trainer/trainer_bloc.dart';
 import 'config/env_config.dart';
 import 'data/repositories/api_repository.dart';
 import 'screens/home_client_screen.dart';
+import 'screens/home_trainer_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/profile_screen.dart';
@@ -62,9 +63,7 @@ class DDXApp extends StatelessWidget {
             theme: const CupertinoThemeData(
               primaryColor: CupertinoColors.systemBlue,
             ),
-            home: isLoggedIn
-                ? HomeClientScreen(userData: userData!)
-                : const LoginScreen(),
+            home: _getHomeScreen(),
             routes: {
               '/login': (context) => const LoginScreen(),
               '/registration': (context) => const RegistrationScreen(),
@@ -80,9 +79,7 @@ class DDXApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: CupertinoColors.systemBlue,
         ),
-        home: isLoggedIn
-            ? HomeClientScreen(userData: userData!)
-            : const LoginScreen(),
+        home: _getHomeScreen(),
         routes: {
           '/login': (context) => const LoginScreen(),
           '/registration': (context) => const RegistrationScreen(),
@@ -91,5 +88,15 @@ class DDXApp extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget _getHomeScreen() {
+    if (isLoggedIn && userData != null) {
+      return userData!.role == 'trainer'
+          ? HomeTrainerScreen(userData: userData!)
+          : HomeClientScreen(userData: userData!);
+    } else {
+      return const LoginScreen();
+    }
   }
 }

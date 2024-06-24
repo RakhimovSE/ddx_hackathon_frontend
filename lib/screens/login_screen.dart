@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models/user.dart';
 import 'home_client_screen.dart';
+import 'home_trainer_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -41,7 +42,10 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         CupertinoPageRoute(
-            builder: (context) => HomeClientScreen(userData: user)),
+          builder: (context) => user.role == 'trainer'
+              ? HomeTrainerScreen(userData: user)
+              : HomeClientScreen(userData: user),
+        ),
       );
     } else {
       print('Login failed: ${response.body}');
