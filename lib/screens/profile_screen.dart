@@ -29,6 +29,7 @@ class ProfileScreen extends StatelessWidget {
           children: [
             UserInfo(userData: userData),
             const SizedBox(height: 20),
+            const ProfileSectionHeader(title: 'Аккаунт'),
             ProfileListTile(
               icon: CupertinoIcons.chart_bar,
               title: 'Статистика',
@@ -43,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
                 // Handle Izometriya tap
               },
             ),
-            const ProfileSectionHeader(title: ''),
+            const ProfileSectionHeader(title: 'Основное'),
             ProfileListTile(
               icon: CupertinoIcons.person,
               title: 'Данные пользователя',
