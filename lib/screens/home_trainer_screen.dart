@@ -1,9 +1,9 @@
-import 'package:ddx_hackathon_frontend/screens/exercise_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import '../data/models/user.dart';
 import 'main/main_screen.dart';
 import 'profile_screen.dart';
-import 'trainers/trainer_screen.dart';
+import 'exercise_list_screen.dart';
+import 'client_list_screen.dart';
 
 class HomeTrainerScreen extends StatelessWidget {
   final User userData;
@@ -21,10 +21,10 @@ class HomeTrainerScreen extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person_2),
-            label: 'Тренеры',
+            label: 'Клиенты',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.ellipses_bubble),
+            icon: Icon(CupertinoIcons.sportscourt),
             label: 'Упражнения',
           ),
           BottomNavigationBarItem(
@@ -41,7 +41,7 @@ class HomeTrainerScreen extends StatelessWidget {
             );
           case 1:
             return CupertinoTabView(
-              builder: (context) => const TrainerScreen(),
+              builder: (context) => const ClientListScreen(),
             );
           case 2:
             return CupertinoTabView(

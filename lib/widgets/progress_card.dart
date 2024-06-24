@@ -67,7 +67,7 @@ class ProgressCard extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
