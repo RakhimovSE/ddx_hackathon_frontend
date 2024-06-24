@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/models/client_workout_exercise.dart';
+import '../widgets/tag_widget.dart'; // Import the TagWidget
 
 class ExerciseDetailScreen extends StatefulWidget {
   final ClientWorkoutExercise exercise;
@@ -101,8 +102,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                     ...List.generate(
                         2,
                         (index) => const Padding(
-                              padding:
-                                  EdgeInsets.symmetric(vertical: 8.0),
+                              padding: EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 'Плейсхолдер для предупреждения',
                                 style: TextStyle(
@@ -160,12 +160,14 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     Color difficultyColor = CupertinoColors.systemPurple;
 
     tags.addAll(widget.exercise.exercise.muscles
-        .map((muscle) => _buildTag(muscle.name, muscleColor)));
-    tags.add(_buildTag(widget.exercise.exercise.type.name, typeColor));
-    tags.addAll(widget.exercise.exercise.equipments
-        .map((equipment) => _buildTag(equipment.name, equipmentColor)));
+        .map((muscle) => TagWidget(tag: muscle.name, color: muscleColor)));
     tags.add(
-        _buildTag(widget.exercise.exercise.difficulty.level, difficultyColor));
+        TagWidget(tag: widget.exercise.exercise.type.name, color: typeColor));
+    tags.addAll(widget.exercise.exercise.equipments.map(
+        (equipment) => TagWidget(tag: equipment.name, color: equipmentColor)));
+    tags.add(TagWidget(
+        tag: widget.exercise.exercise.difficulty.level,
+        color: difficultyColor));
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -173,21 +175,6 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
         spacing: 8.0,
         runSpacing: 8.0,
         children: tags,
-      ),
-    );
-  }
-
-  Widget _buildTag(String tag, Color color) {
-    return Container(
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
-        border: Border.all(color: color),
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Text(
-        tag,
-        style: TextStyle(color: color),
       ),
     );
   }
