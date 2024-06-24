@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bloc/client_training_plan/client_training_plan_bloc.dart';
 import '../../bloc/client_training_plan/client_training_plan_state.dart';
 import 'training_card.dart';
+import 'training_plan_screen.dart';
 
 class ClientTrainingPlansSection extends StatelessWidget {
   const ClientTrainingPlansSection({super.key});
@@ -50,6 +51,15 @@ class ClientTrainingPlansSection extends StatelessWidget {
                     progress: 0, // Placeholder, update as needed
                     imageUrl: '', // Placeholder, update as needed
                     trainingPlanId: plan.id,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) =>
+                              TrainingPlanScreen(trainingPlanId: plan.id),
+                        ),
+                      );
+                    },
                   );
                 }).toList(),
               );

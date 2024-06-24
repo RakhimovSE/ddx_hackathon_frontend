@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'training_plan_screen.dart';
 
 class TrainingCard extends StatelessWidget {
   final String title;
@@ -8,6 +7,7 @@ class TrainingCard extends StatelessWidget {
   final int progress;
   final String imageUrl;
   final int trainingPlanId;
+  final VoidCallback onTap;
 
   const TrainingCard({
     required this.title,
@@ -16,21 +16,14 @@ class TrainingCard extends StatelessWidget {
     required this.progress,
     required this.imageUrl,
     required this.trainingPlanId,
+    required this.onTap,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          CupertinoPageRoute(
-            builder: (context) =>
-                TrainingPlanScreen(trainingPlanId: trainingPlanId),
-          ),
-        );
-      },
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         padding: const EdgeInsets.all(8.0),
