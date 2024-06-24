@@ -114,8 +114,9 @@ class _ExerciseDescriptionState extends State<ExerciseDescription> {
     }
     return Image.network(
       '${dotenv.env['API_URL']}/static/${exercise.exercise.photos[_currentImageIndex].photoUrl}',
-      fit: BoxFit.contain,
-      height: 250,
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: 300,
       errorBuilder:
           (BuildContext context, Object exception, StackTrace? stackTrace) {
         return const Icon(CupertinoIcons.photo);

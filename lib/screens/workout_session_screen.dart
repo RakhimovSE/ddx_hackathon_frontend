@@ -66,7 +66,6 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
   @override
   Widget build(BuildContext context) {
     final currentExercise = exercises[currentExerciseIndex];
-    final currentSet = currentExercise.sets[currentSetIndex];
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
@@ -82,7 +81,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
               ),
             );
           },
-          child: Icon(CupertinoIcons.question_circle),
+          child: const Icon(CupertinoIcons.question_circle),
         ),
       ),
       child: SafeArea(
