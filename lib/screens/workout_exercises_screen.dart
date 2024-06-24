@@ -11,8 +11,15 @@ import 'workout_session_screen.dart';
 
 class WorkoutExercisesScreen extends StatefulWidget {
   final int clientWorkoutId;
+  final int clientWorkoutIndex;
+  final String clientWorkoutTitle;
 
-  const WorkoutExercisesScreen({super.key, required this.clientWorkoutId});
+  const WorkoutExercisesScreen({
+    super.key,
+    required this.clientWorkoutId,
+    required this.clientWorkoutIndex,
+    required this.clientWorkoutTitle,
+  });
 
   @override
   _WorkoutExercisesScreenState createState() => _WorkoutExercisesScreenState();
@@ -60,19 +67,19 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                 ? const Center(child: Text('Упражнений нет'))
                 : Column(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
                             Text(
-                              '#1 Грудь + плечи',
-                              style: TextStyle(
+                              '#${widget.clientWorkoutIndex} ${widget.clientWorkoutTitle}',
+                              style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 8),
-                            Text(
+                            const SizedBox(height: 8),
+                            const Text(
                               '~ 45 минут',
                               style: TextStyle(
                                 fontSize: 16,

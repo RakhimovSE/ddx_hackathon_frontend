@@ -24,6 +24,8 @@ class TrainingScheduleCard extends StatelessWidget {
           CupertinoPageRoute(
             builder: (context) => WorkoutExercisesScreen(
               clientWorkoutId: clientWorkoutId,
+              clientWorkoutIndex: index,
+              clientWorkoutTitle: title,
             ),
           ),
         );
