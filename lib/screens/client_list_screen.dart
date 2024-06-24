@@ -79,11 +79,18 @@ class ClientListScreen extends StatelessWidget {
 
   Widget _buildClientTile(BuildContext context, String name, String imageUrl) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: CupertinoColors.systemGrey5),
-        ),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        color: CupertinoColors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          BoxShadow(
+            color: CupertinoColors.systemGrey.withOpacity(0.5),
+            blurRadius: 5.0,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -96,7 +103,13 @@ class ClientListScreen extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
-                return const Icon(CupertinoIcons.person);
+                return Container(
+                  width: 50,
+                  height: 50,
+                  color: CupertinoColors.systemGrey,
+                  child: const Icon(CupertinoIcons.person,
+                      color: CupertinoColors.white),
+                );
               },
             ),
           ),
