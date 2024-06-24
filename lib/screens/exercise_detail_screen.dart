@@ -77,7 +77,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Полное описание упражнения зачем оно, на какие мышцы, специфика плюсы и минус и еще какая-то инфа',
+                      'Это упражнение укрепляет основные группы мышц, включая ноги, спину и пресс. Регулярные тренировки улучшат силу, выносливость и общую физическую форму.',
                       style: TextStyle(
                         fontSize: 16,
                         color: CupertinoColors.systemGrey,
@@ -85,36 +85,49 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                     ),
                     const SizedBox(height: 16),
                     _buildSectionTitle('Инструкция'),
-                    ...List.generate(
-                        2,
-                        (index) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Text(
-                                '${index + 1}. Плейсхолдер для инструкции',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            )),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        '1. Встаньте прямо, ноги на ширине плеч. При необходимости возьмите оборудование.',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        '2. Медленно опуститесь в присед, держа спину прямой. Поднимитесь в исходное положение.',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     _buildSectionTitle('Предупреждения'),
-                    ...List.generate(
-                        2,
-                        (index) => const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
-                              child: Text(
-                                'Плейсхолдер для предупреждения',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: CupertinoColors.systemRed,
-                                ),
-                              ),
-                            )),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        'Не округляйте спину.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: CupertinoColors.systemRed,
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        'Дышите ровно, выдыхайте при усилии.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: CupertinoColors.systemRed,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
               _buildTags(),
             ],
           ),
