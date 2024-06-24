@@ -5,14 +5,19 @@ import '../custom_image.dart';
 
 class ExerciseListItem extends StatelessWidget {
   final Exercise exercise;
+  final VoidCallback onTap;
 
-  const ExerciseListItem({super.key, required this.exercise});
+  const ExerciseListItem({
+    super.key,
+    required this.exercise,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () {},
+      onPressed: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         padding: const EdgeInsets.all(12.0),

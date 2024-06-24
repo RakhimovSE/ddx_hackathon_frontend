@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import '../../data/models/client_workout_exercise.dart';
-import '../widgets/tag_widget.dart'; // Import the TagWidget
+import '../data/models/exercise.dart';
+import '../widgets/tag_widget.dart';
 
 class ExerciseDetailScreen extends StatefulWidget {
-  final ClientWorkoutExercise exercise;
+  final Exercise exercise;
 
   const ExerciseDetailScreen({super.key, required this.exercise});
 
@@ -30,11 +30,11 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   }
 
   void _startImageRotation() {
-    if (widget.exercise.exercise.photos.isNotEmpty) {
+    if (widget.exercise.photos.isNotEmpty) {
       _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
         setState(() {
           _currentImageIndex =
-              (_currentImageIndex + 1) % widget.exercise.exercise.photos.length;
+              (_currentImageIndex + 1) % widget.exercise.photos.length;
         });
       });
     }
@@ -69,7 +69,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.exercise.exercise.name,
+                      widget.exercise.name,
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -136,12 +136,12 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     );
   }
 
-  Widget _buildImage(ClientWorkoutExercise exercise) {
-    if (exercise.exercise.photos.isEmpty) {
+  Widget _buildImage(Exercise exercise) {
+    if (exercise.photos.isEmpty) {
       return const Icon(CupertinoIcons.photo);
     }
     return Image.network(
-      '${dotenv.env['API_URL']}/static/${exercise.exercise.photos[_currentImageIndex].photoUrl}',
+      '${dotenv.env['API_URL']}/static/${exercise.photos[_currentImageIndex].photoUrl}',
       fit: BoxFit.cover,
       width: double.infinity,
       height: 300,
@@ -172,15 +172,13 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     Color equipmentColor = CupertinoColors.activeOrange;
     Color difficultyColor = CupertinoColors.systemPurple;
 
-    tags.addAll(widget.exercise.exercise.muscles
+    tags.addAll(widget.exercise.muscles
         .map((muscle) => TagWidget(tag: muscle.name, color: muscleColor)));
-    tags.add(
-        TagWidget(tag: widget.exercise.exercise.type.name, color: typeColor));
-    tags.addAll(widget.exercise.exercise.equipments.map(
+    tags.add(TagWidget(tag: widget.exercise.type.name, color: typeColor));
+    tags.addAll(widget.exercise.equipments.map(
         (equipment) => TagWidget(tag: equipment.name, color: equipmentColor)));
     tags.add(TagWidget(
-        tag: widget.exercise.exercise.difficulty.level,
-        color: difficultyColor));
+        tag: widget.exercise.difficulty.level, color: difficultyColor));
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),

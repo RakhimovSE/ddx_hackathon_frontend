@@ -100,7 +100,7 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                                   context,
                                   CupertinoPageRoute(
                                     builder: (context) => ExerciseDetailScreen(
-                                      exercise: exercise,
+                                      exercise: exercise.exercise,
                                     ),
                                   ),
                                 );

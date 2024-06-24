@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import '../../data/models/exercise.dart';
+import '../../screens/exercise_detail_screen.dart';
 import 'exercise_list_item.dart';
 
 class ExerciseList extends StatelessWidget {
@@ -28,7 +29,19 @@ class ExerciseList extends StatelessWidget {
             ),
           );
         }
-        return ExerciseListItem(exercise: exercises[index]);
+        return ExerciseListItem(
+          exercise: exercises[index],
+          onTap: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => ExerciseDetailScreen(
+                  exercise: exercises[index],
+                ),
+              ),
+            );
+          },
+        );
       },
     );
   }

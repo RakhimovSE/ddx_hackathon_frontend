@@ -77,7 +77,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
               context,
               CupertinoPageRoute(
                 builder: (context) => ExerciseDetailScreen(
-                    exercise: exercises[currentExerciseIndex]),
+                    exercise: exercises[currentExerciseIndex].exercise),
               ),
             );
           },
