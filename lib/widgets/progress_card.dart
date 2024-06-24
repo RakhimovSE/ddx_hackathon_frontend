@@ -4,82 +4,88 @@ class ProgressCard extends StatelessWidget {
   final String title;
   final String value;
   final String? unit;
+  final VoidCallback onTap;
 
   const ProgressCard({
     super.key,
     required this.title,
     required this.value,
     this.unit,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: CupertinoColors.white,
-        borderRadius: BorderRadius.circular(12.0),
-        boxShadow: [
-          BoxShadow(
-            color: CupertinoColors.systemGrey.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              color: CupertinoColors.systemGrey,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: CupertinoColors.systemBackground,
+          borderRadius: BorderRadius.circular(12.0),
+          boxShadow: [
+            BoxShadow(
+              color: CupertinoColors.systemGrey.withOpacity(0.2),
+              blurRadius: 8.0,
+              offset: const Offset(0, 2),
             ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                color: CupertinoColors.systemGrey,
               ),
-              if (unit != null)
-                Padding(
-                  padding: const EdgeInsets.only(left: 4.0),
-                  child: Text(
+            ),
+            const SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: CupertinoColors.black,
+                  ),
+                ),
+                if (unit != null) ...[
+                  const SizedBox(width: 4),
+                  Text(
                     unit!,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 16,
                       color: CupertinoColors.systemGrey,
                     ),
                   ),
+                ],
+              ],
+            ),
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'View Now',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: CupertinoColors.systemPurple,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-            ],
-          ),
-          const Spacer(),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                'View Now',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: CupertinoColors.activeBlue,
+                Icon(
+                  CupertinoIcons.chevron_forward,
+                  color: CupertinoColors.systemGrey,
                 ),
-              ),
-              Icon(
-                CupertinoIcons.forward,
-                color: CupertinoColors.activeBlue,
-                size: 16,
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

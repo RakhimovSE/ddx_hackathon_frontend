@@ -72,32 +72,38 @@ class ProgressScreen extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 16.0,
         mainAxisSpacing: 16.0,
-        children: const [
+        children: [
           ProgressCard(
             title: 'calories burned',
             value: '1,592',
             unit: 'Kcal',
+            onTap: () {},
           ),
           ProgressCard(
             title: 'completed workouts',
             value: '128',
+            onTap: () {},
           ),
           ProgressCard(
             title: 'max month streak',
             value: '16',
+            onTap: () {},
           ),
           ProgressCard(
             title: 'completed workouts',
             value: '128',
+            onTap: () {},
           ),
           ProgressCard(
             title: 'calories burned',
             value: '1,592',
             unit: 'Kcal',
+            onTap: () {},
           ),
           ProgressCard(
             title: 'completed workouts',
             value: '128',
+            onTap: () {},
           ),
         ],
       ),
