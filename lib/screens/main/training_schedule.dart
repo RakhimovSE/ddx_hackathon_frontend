@@ -27,14 +27,11 @@ class TrainingSchedule extends StatelessWidget {
 
     return Column(
       children: workouts.map((workout) {
-        String time = 'No time specified';
-        final DateFormat formatter = DateFormat.Hm();
-        time = formatter.format(workout.plannedStartDate);
+        String duration = '45 минут';
         return TrainingScheduleCard(
+          index: workouts.indexOf(workout) + 1,
           title: workout.name,
-          time: time,
-          trainer: 'Тренер', // Adjust as necessary
-          imageUrl: 'https://example.com/training.jpg', // Placeholder
+          duration: duration,
           clientWorkoutId: workout.id,
         );
       }).toList(),

@@ -54,26 +54,133 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
             ? const Center(child: CupertinoActivityIndicator())
             : workouts.isEmpty
                 ? const Center(child: Text('Тренировок нет'))
-                : ListView.builder(
-                    itemCount: workouts.length,
-                    itemBuilder: (context, index) {
-                      final workout = workouts[index];
-                      String formattedTime = 'No time specified';
-                      final DateFormat dateFormatter =
-                          DateFormat('d MMMM', 'ru');
-                      final DateFormat timeFormatter = DateFormat('HH:mm');
-                      formattedTime =
-                          '${dateFormatter.format(workout.plannedStartDate.toLocal())}, ${timeFormatter.format(workout.plannedStartDate.toLocal())}';
-                      return TrainingScheduleCard(
-                        title: workout.name,
-                        time: formattedTime,
-                        trainer: 'Тренер', // Adjust as necessary
-                        imageUrl:
-                            'https://example.com/training.jpg', // Placeholder
-                        clientWorkoutId: workout.id,
-                      );
-                    },
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        _buildHeader(), // Добавим заголовок
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: workouts.length,
+                          itemBuilder: (context, index) {
+                            final workout = workouts[index];
+                            return TrainingScheduleCard(
+                              index: index + 1,
+                              title: workout.name,
+                              duration:
+                                  '45 минут', // Плейсхолдер для длительности
+                              clientWorkoutId: workout.id,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Карточка с основной информацией о тренировочном плане
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: CupertinoColors.systemGrey5,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'ПОХУДЕНИЕ СТАРТ',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: CupertinoColors.white,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '24 тренировки',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: CupertinoColors.white.withOpacity(0.7),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Text(
+                      'Алина Колебанова',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: CupertinoColors.white,
+                      ),
+                    ),
+                    Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 4.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.activeBlue,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Text(
+                        '45%',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: CupertinoColors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Описание
+          Text(
+            'Похудение, в зале, с экипировкой',
+            style: TextStyle(
+              fontSize: 16,
+              color: CupertinoColors.activeGreen,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Основное короткое описание',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: CupertinoColors.black,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Тут более длинное полное описание в несколько абзацев потому что так надо. Везере наескьоаоавьссьоосвтлтчм*вмоттвоаоаоа со сов мовоят моста.',
+            style: TextStyle(
+              fontSize: 16,
+              color: CupertinoColors.systemGrey,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Тут более длинное полное описание в несколько абзацев потому что так надо. Везере наескьоаоавьссьоосвтлтчм*вмоттвоаоаоа со сов мовоят моста.',
+            style: TextStyle(
+              fontSize: 16,
+              color: CupertinoColors.systemGrey,
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
       ),
     );
   }
