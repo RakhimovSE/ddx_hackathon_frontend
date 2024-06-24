@@ -8,7 +8,7 @@ import 'bloc/client_training_plan/client_training_plan_bloc.dart';
 import 'bloc/trainer/trainer_bloc.dart';
 import 'config/env_config.dart';
 import 'data/repositories/api_repository.dart';
-import 'screens/home_screen.dart';
+import 'screens/home_client_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/registration_screen.dart';
 import 'screens/profile_screen.dart';
@@ -63,12 +63,12 @@ class DDXApp extends StatelessWidget {
               primaryColor: CupertinoColors.systemBlue,
             ),
             home: isLoggedIn
-                ? HomeScreen(userData: userData!)
+                ? HomeClientScreen(userData: userData!)
                 : const LoginScreen(),
             routes: {
               '/login': (context) => const LoginScreen(),
               '/registration': (context) => const RegistrationScreen(),
-              '/home': (context) => HomeScreen(userData: userData!),
+              '/home': (context) => HomeClientScreen(userData: userData!),
               '/profile': (context) => ProfileScreen(userData: userData!),
             },
           ),
@@ -80,12 +80,13 @@ class DDXApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: CupertinoColors.systemBlue,
         ),
-        home:
-            isLoggedIn ? HomeScreen(userData: userData!) : const LoginScreen(),
+        home: isLoggedIn
+            ? HomeClientScreen(userData: userData!)
+            : const LoginScreen(),
         routes: {
           '/login': (context) => const LoginScreen(),
           '/registration': (context) => const RegistrationScreen(),
-          '/home': (context) => HomeScreen(userData: userData!),
+          '/home': (context) => HomeClientScreen(userData: userData!),
           '/profile': (context) => ProfileScreen(userData: userData!),
         },
       ),

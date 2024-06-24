@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models/user.dart';
-import 'home_screen.dart';
+import 'home_client_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -43,7 +43,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        CupertinoPageRoute(builder: (context) => HomeScreen(userData: user)),
+        CupertinoPageRoute(
+            builder: (context) => HomeClientScreen(userData: user)),
       );
     } else {
       print('Registration failed: ${response.body}');

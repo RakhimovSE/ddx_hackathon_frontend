@@ -5,10 +5,10 @@ import 'trainers/trainer_screen.dart';
 import 'progress_screen.dart';
 import 'profile_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeClientScreen extends StatelessWidget {
   final User userData;
 
-  const HomeScreen({super.key, required this.userData});
+  const HomeClientScreen({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {

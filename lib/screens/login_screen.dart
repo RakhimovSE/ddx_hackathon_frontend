@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models/user.dart';
-import 'home_screen.dart';
+import 'home_client_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -40,7 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        CupertinoPageRoute(builder: (context) => HomeScreen(userData: user)),
+        CupertinoPageRoute(
+            builder: (context) => HomeClientScreen(userData: user)),
       );
     } else {
       print('Login failed: ${response.body}');
