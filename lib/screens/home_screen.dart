@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import '../data/models/user.dart';
 import 'main/main_screen.dart';
 import 'trainers/trainer_screen.dart';
-import 'exercise_list_screen.dart';
+import 'progress_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.list_bullet),
-            label: 'Упражнения',
+            label: 'Прогресс',
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.person),
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
             );
           case 2:
             return CupertinoTabView(
-              builder: (context) => const ExerciseListScreen(),
+              builder: (context) => const ProgressScreen(),
             );
           case 3:
             return CupertinoTabView(
