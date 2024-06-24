@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import '../data/models/user.dart';
-import 'main/main_client_screen.dart';
+import 'user_training_plans_screen.dart';
 import 'profile_screen.dart';
 import 'exercise_list_screen.dart';
 import 'client_list_screen.dart';
@@ -37,7 +37,8 @@ class HomeTrainerScreen extends StatelessWidget {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              builder: (context) => const MainClientScreen(),
+              builder: (context) =>
+                  UserTrainingPlansScreen(userId: userData.id),
             );
           case 1:
             return CupertinoTabView(
@@ -53,7 +54,8 @@ class HomeTrainerScreen extends StatelessWidget {
             );
           default:
             return CupertinoTabView(
-              builder: (context) => const MainClientScreen(),
+              builder: (context) =>
+                  UserTrainingPlansScreen(userId: userData.id),
             );
         }
       },

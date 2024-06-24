@@ -1,20 +1,29 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'user.dart';
+import 'workout.dart';
 
 part 'training_plan.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class TrainingPlan {
   @JsonKey(name: 'ID')
   final int id;
-  final String title;
-  final String content;
-  final int userId;
+  final String name;
+  final String description;
+  @JsonKey(name: 'Workouts')
+  final List<Workout> workouts;
+  @JsonKey(name: 'created_by_id')
+  final int createdById;
+  @JsonKey(name: 'created_by')
+  final User createdBy;
 
   TrainingPlan({
     required this.id,
-    required this.title,
-    required this.content,
-    required this.userId,
+    required this.name,
+    required this.description,
+    required this.workouts,
+    required this.createdById,
+    required this.createdBy,
   });
 
   factory TrainingPlan.fromJson(Map<String, dynamic> json) =>
