@@ -150,4 +150,16 @@ class ApiRepository {
       throw Exception('Failed to load client exercise sets');
     }
   }
+
+  Future<List<User>> fetchClientsForTrainer(int trainerId) async {
+    final response =
+        await http.get(Uri.parse('$baseUrl/trainers/$trainerId/clients'));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((client) => User.fromJson(client)).toList();
+    } else {
+      throw Exception('Failed to load clients for trainer');
+    }
+  }
 }
