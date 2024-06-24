@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/client_workout.dart';
 import '../../data/repositories/api_repository.dart';
+import '../../widgets/tag_widget.dart';
 import 'training_schedule_card.dart';
 
 class TrainingPlanScreen extends StatefulWidget {
@@ -86,7 +87,6 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Карточка с основной информацией о тренировочном плане
           Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
@@ -146,13 +146,15 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          // Описание
-          const Text(
-            'Похудение, в зале, с экипировкой', // Placeholder for description tags
-            style: TextStyle(
-              fontSize: 16,
-              color: CupertinoColors.activeGreen,
-            ),
+          const Wrap(
+            spacing: 8.0,
+            runSpacing: 8.0,
+            children: [
+              TagWidget(tag: 'Похудение', color: CupertinoColors.activeGreen),
+              TagWidget(tag: 'В зале', color: CupertinoColors.activeOrange),
+              TagWidget(
+                  tag: 'С экипировкой', color: CupertinoColors.activeBlue),
+            ],
           ),
           const SizedBox(height: 16),
           const Text(
