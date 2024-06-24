@@ -56,7 +56,7 @@ class ClientTrainingPlansSection extends StatelessWidget {
                         context,
                         CupertinoPageRoute(
                           builder: (context) =>
-                              TrainingPlanScreen(trainingPlanId: plan.id),
+                              TrainingPlanScreen(trainingPlan: plan),
                         ),
                       );
                     },

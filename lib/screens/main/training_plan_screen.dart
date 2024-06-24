@@ -1,3 +1,4 @@
+import 'package:ddx_hackathon_frontend/data/models/client_training_plan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/models/client_workout.dart';
@@ -5,9 +6,9 @@ import '../../data/repositories/api_repository.dart';
 import 'training_schedule_card.dart';
 
 class TrainingPlanScreen extends StatefulWidget {
-  final int trainingPlanId;
+  final ClientTrainingPlan trainingPlan;
 
-  const TrainingPlanScreen({super.key, required this.trainingPlanId});
+  const TrainingPlanScreen({super.key, required this.trainingPlan});
 
   @override
   _TrainingPlanScreenState createState() => _TrainingPlanScreenState();
@@ -28,7 +29,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
 
     try {
       final fetchedWorkouts = await apiRepository
-          .fetchClientWorkoutsByPlanId(widget.trainingPlanId);
+          .fetchClientWorkoutsByPlanId(widget.trainingPlan.id);
       setState(() {
         workouts = fetchedWorkouts;
         isLoading = false;
@@ -56,7 +57,8 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                 : SingleChildScrollView(
                     child: Column(
                       children: [
-                        _buildHeader(), // Добавим заголовок
+                        _buildHeader(
+                            widget.trainingPlan), // Передаем план в заголовок
                         ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -66,8 +68,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                             return TrainingScheduleCard(
                               index: index + 1,
                               title: workout.name,
-                              duration:
-                                  '45 минут', // Плейсхолдер для длительности
+                              duration: '45 минут', // Placeholder for duration
                               clientWorkoutId: workout.id,
                             );
                           },
@@ -79,7 +80,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(ClientTrainingPlan plan) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -95,9 +96,9 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'ПОХУДЕНИЕ СТАРТ',
-                  style: TextStyle(
+                Text(
+                  plan.name,
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: CupertinoColors.white,
@@ -105,7 +106,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '24 тренировки',
+                  '${workouts.length} тренировки',
                   style: TextStyle(
                     fontSize: 16,
                     color: CupertinoColors.white.withOpacity(0.7),
@@ -114,9 +115,9 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Text(
-                      'Алина Колебанова',
-                      style: TextStyle(
+                    Text(
+                      plan.createdBy.name,
+                      style: const TextStyle(
                         fontSize: 16,
                         color: CupertinoColors.white,
                       ),
@@ -132,7 +133,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: const Text(
-                        '45%',
+                        '45%', // Placeholder for progress
                         style: TextStyle(
                           fontSize: 16,
                           color: CupertinoColors.white,
@@ -147,7 +148,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
           const SizedBox(height: 16),
           // Описание
           const Text(
-            'Похудение, в зале, с экипировкой',
+            'Похудение, в зале, с экипировкой', // Placeholder for description tags
             style: TextStyle(
               fontSize: 16,
               color: CupertinoColors.activeGreen,
@@ -155,7 +156,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
           ),
           const SizedBox(height: 16),
           const Text(
-            'Основное короткое описание',
+            'Комплексная программа тренировок',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -164,7 +165,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Тут более длинное полное описание в несколько абзацев потому что так надо. Везере наескьоаоавьссьоосвтлтчм*вмоттвоаоаоа со сов мовоят моста.',
+            'Этот тренировочный план включает разнообразные упражнения для улучшения общей физической подготовки, повышения выносливости и укрепления мышц.',
             style: TextStyle(
               fontSize: 16,
               color: CupertinoColors.systemGrey,
@@ -172,7 +173,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Тут более длинное полное описание в несколько абзацев потому что так надо. Везере наескьоаоавьссьоосвтлтчм*вмоттвоаоаоа со сов мовоят моста.',
+            'Программа разработана для выполнения в зале и рассчитана на использование различных типов оборудования.',
             style: TextStyle(
               fontSize: 16,
               color: CupertinoColors.systemGrey,
