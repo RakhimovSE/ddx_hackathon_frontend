@@ -72,13 +72,14 @@ class _ExerciseDescriptionState extends State<ExerciseDescription> {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(
-                'Рекомендуемый вес: ${widget.exercise.sets.first.restTime} кг',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: CupertinoColors.systemGrey,
+              if (widget.exercise.exercise.needWeight)
+                const Text(
+                  'Рекомендуемый вес: 15 кг',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: CupertinoColors.systemGrey,
+                  ),
                 ),
-              ),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

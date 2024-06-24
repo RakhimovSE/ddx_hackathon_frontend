@@ -24,28 +24,30 @@ class SetEntryForm extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Вес (кг)',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              if (currentExercise.exercise.needWeight)
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Вес (кг)',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    CupertinoTextField(
-                      placeholder: 'Вес (кг)',
-                      onChanged: (value) {
-                        // обработка изменений веса
-                      },
-                    ),
-                  ],
+                      const SizedBox(height: 8),
+                      CupertinoTextField(
+                        placeholder: 'Вес (кг)',
+                        onChanged: (value) {
+                          // обработка изменений веса
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 16),
+              if (currentExercise.exercise.needWeight)
+                const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
