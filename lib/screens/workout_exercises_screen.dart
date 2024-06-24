@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -58,6 +60,25 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                 ? const Center(child: Text('Упражнений нет'))
                 : Column(
                     children: [
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '#1 Грудь + плечи',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '~ 45 минут',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: CupertinoColors.systemGrey,
+                            ),
+                          ),
+                        ],
+                      ),
                       Expanded(
                         child: ListView.builder(
                           itemCount: exercises.length,
@@ -74,28 +95,7 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                                   ),
                                 );
                               },
-                              child: CupertinoListTile(
-                                leading: ClipRRect(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  child: Image.network(
-                                    exercise.exercise.photos.isNotEmpty
-                                        ? '${dotenv.env['API_URL']}/static/${exercise.exercise.photos.first.photoUrl}'
-                                        : 'https://example.com/default.jpg',
-                                    width: 48,
-                                    height: 48,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object exception,
-                                        StackTrace? stackTrace) {
-                                      return const Icon(CupertinoIcons.photo);
-                                    },
-                                  ),
-                                ),
-                                title: Text(exercise.exercise.name),
-                                subtitle: Text(
-                                    '${exerciseEquipmentsDescription(exercise.exercise)}. ${exerciseSetsDescription(exercise)}'),
-                                trailing: const CupertinoListTileChevron(),
-                              ),
+                              child: _buildExerciseCard(exercise),
                             );
                           },
                         ),
@@ -120,6 +120,68 @@ class _WorkoutExercisesScreenState extends State<WorkoutExercisesScreen> {
                       ),
                     ],
                   ),
+      ),
+    );
+  }
+
+  Widget _buildExerciseCard(ClientWorkoutExercise exercise) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: CupertinoColors.systemBackground,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: CupertinoColors.systemGrey.withOpacity(0.5),
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: Image.network(
+              exercise.exercise.photos.isNotEmpty
+                  ? '${dotenv.env['API_URL']}/static/${exercise.exercise.photos.first.photoUrl}'
+                  : 'https://example.com/default.jpg',
+              width: 60,
+              height: 60,
+              fit: BoxFit.cover,
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace? stackTrace) {
+                return const Icon(CupertinoIcons.photo);
+              },
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  exercise.exercise.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${Random().nextInt(11) + 5} минут',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: CupertinoColors.systemGrey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Icon(CupertinoIcons.chevron_forward,
+              color: CupertinoColors.systemGrey),
+        ],
       ),
     );
   }
