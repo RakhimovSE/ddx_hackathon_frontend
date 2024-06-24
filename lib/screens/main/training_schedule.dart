@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 import '../../data/models/client_workout.dart';
 import 'training_schedule_card.dart';
 

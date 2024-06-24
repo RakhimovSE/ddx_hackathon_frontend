@@ -47,7 +47,7 @@ class TrainingScheduleCard extends StatelessWidget {
           children: [
             Text(
               '$index',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
                 color: CupertinoColors.activeBlue,

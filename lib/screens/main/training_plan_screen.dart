@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import '../../data/models/client_workout.dart';
 import '../../data/repositories/api_repository.dart';
 import 'training_schedule_card.dart';
@@ -60,7 +59,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                         _buildHeader(), // Добавим заголовок
                         ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: workouts.length,
                           itemBuilder: (context, index) {
                             final workout = workouts[index];
@@ -96,7 +95,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'ПОХУДЕНИЕ СТАРТ',
                   style: TextStyle(
                     fontSize: 24,
@@ -115,14 +114,14 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Алина Колебанова',
                       style: TextStyle(
                         fontSize: 16,
                         color: CupertinoColors.white,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8.0,
@@ -132,7 +131,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
                         color: CupertinoColors.activeBlue,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: Text(
+                      child: const Text(
                         '45%',
                         style: TextStyle(
                           fontSize: 16,
@@ -147,7 +146,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
           ),
           const SizedBox(height: 16),
           // Описание
-          Text(
+          const Text(
             'Похудение, в зале, с экипировкой',
             style: TextStyle(
               fontSize: 16,
@@ -155,7 +154,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          Text(
+          const Text(
             'Основное короткое описание',
             style: TextStyle(
               fontSize: 20,
@@ -164,7 +163,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
+          const Text(
             'Тут более длинное полное описание в несколько абзацев потому что так надо. Везере наескьоаоавьссьоосвтлтчм*вмоттвоаоаоа со сов мовоят моста.',
             style: TextStyle(
               fontSize: 16,
@@ -172,7 +171,7 @@ class _TrainingPlanScreenState extends State<TrainingPlanScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
+          const Text(
             'Тут более длинное полное описание в несколько абзацев потому что так надо. Везере наескьоаоавьссьоосвтлтчм*вмоттвоаоаоа со сов мовоят моста.',
             style: TextStyle(
               fontSize: 16,
