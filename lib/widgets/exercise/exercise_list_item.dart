@@ -14,42 +14,50 @@ class ExerciseListItem extends StatelessWidget {
       padding: EdgeInsets.zero,
       onPressed: () {},
       child: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: const BoxDecoration(
-          color: CupertinoColors.systemBackground,
-          border: Border(
-            bottom: BorderSide(
-              color: CupertinoColors.separator,
-              width: 0.0,
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          color: CupertinoColors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: CupertinoColors.systemGrey.withOpacity(0.5),
+              blurRadius: 5.0,
+              offset: const Offset(0, 3),
             ),
-          ),
+          ],
         ),
         child: Row(
           children: [
-            exercise.photos.isNotEmpty
-                ? CustomImage(
-                    imageUrl:
-                        '${dotenv.env['API_URL']}/static/${exercise.photos[0].photoUrl}',
-                    width: 50,
-                    height: 50,
-                  )
-                : const Icon(CupertinoIcons.photo, size: 50),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: CustomImage(
+                imageUrl:
+                    '${dotenv.env['API_URL']}/static/${exercise.photos.isNotEmpty ? exercise.photos[0].photoUrl : ''}',
+                width: 50,
+                height: 50,
+              ),
+            ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(exercise.name,
-                      style: CupertinoTheme.of(context)
-                          .textTheme
-                          .textStyle
-                          .copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
-                  Text(exercise.muscles.map((e) => e.name).join(", "),
-                      style: CupertinoTheme.of(context)
-                          .textTheme
-                          .textStyle
-                          .copyWith(
-                              fontSize: 14, color: CupertinoColors.systemGrey)),
+                  Text(
+                    exercise.name,
+                    style: CupertinoTheme.of(context)
+                        .textTheme
+                        .textStyle
+                        .copyWith(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    exercise.muscles.map((e) => e.name).join(", "),
+                    style: CupertinoTheme.of(context)
+                        .textTheme
+                        .textStyle
+                        .copyWith(
+                            fontSize: 14, color: CupertinoColors.systemGrey),
+                  ),
                 ],
               ),
             ),

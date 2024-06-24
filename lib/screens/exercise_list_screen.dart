@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import '../data/models/exercise.dart';
 import '../data/repositories/api_repository.dart';
-import '../widgets/exercise/exercise_list.dart';
+import '../widgets/exercise/exercise_list_item.dart';
 
 class ExerciseListScreen extends StatefulWidget {
   const ExerciseListScreen({super.key});
@@ -61,13 +61,71 @@ class _ExerciseListScreenState extends State<ExerciseListScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Exercises'),
+      child: CustomScrollView(
+        controller: _scrollController,
+        slivers: [
+          const CupertinoSliverNavigationBar(
+            largeTitle: Text('Упражнения'),
+          ),
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: CupertinoSearchTextField(
+                placeholder: 'Название упражнения...',
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildFilterButton('Ноги'),
+                    _buildFilterButton('Грудь'),
+                    _buildFilterButton('Плечи'),
+                    _buildFilterButton('Спина'),
+                    _buildFilterButton('Бицепс'),
+                    _buildFilterButton('Шея'),
+                    _buildFilterButton('Пресс'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == exercises.length) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: CupertinoActivityIndicator(),
+                    ),
+                  );
+                }
+                return ExerciseListItem(exercise: exercises[index]);
+              },
+              childCount: exercises.length + (isLoading ? 1 : 0),
+            ),
+          ),
+        ],
       ),
-      child: ExerciseList(
-        exercises: exercises,
-        isLoading: isLoading,
-        scrollController: _scrollController,
+    );
+  }
+
+  Widget _buildFilterButton(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: CupertinoButton(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        color: CupertinoColors.systemGrey4,
+        borderRadius: BorderRadius.circular(16.0),
+        onPressed: () {
+          // Handle filter logic
+        },
+        child: Text(title),
       ),
     );
   }
