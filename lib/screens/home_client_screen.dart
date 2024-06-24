@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import '../data/models/user.dart';
-import 'main/main_screen.dart';
+import 'main/main_client_screen.dart';
 import 'trainers/trainer_screen.dart';
 import 'progress_screen.dart';
 import 'profile_screen.dart';
@@ -37,7 +37,7 @@ class HomeClientScreen extends StatelessWidget {
         switch (index) {
           case 0:
             return CupertinoTabView(
-              builder: (context) => const MainScreen(),
+              builder: (context) => const MainClientScreen(),
             );
           case 1:
             return CupertinoTabView(
@@ -53,7 +53,7 @@ class HomeClientScreen extends StatelessWidget {
             );
           default:
             return CupertinoTabView(
-              builder: (context) => const MainScreen(),
+              builder: (context) => const MainClientScreen(),
             );
         }
       },

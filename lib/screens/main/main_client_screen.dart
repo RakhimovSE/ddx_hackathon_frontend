@@ -5,8 +5,8 @@ import '../../bloc/client_training_plan/client_training_plan_event.dart';
 import 'client_training_plans_section.dart';
 import 'weekly_trainings_section.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class MainClientScreen extends StatelessWidget {
+  const MainClientScreen({super.key});
 
   Future<void> _onRefresh(BuildContext context,
       GlobalKey<WeeklyTrainingsSectionState> weeklyTrainingsKey) async {

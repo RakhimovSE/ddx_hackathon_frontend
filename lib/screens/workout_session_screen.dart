@@ -9,7 +9,7 @@ import '../widgets/exercise/exercise_description.dart';
 import '../widgets/exercise/set_entry_form.dart';
 import '../widgets/exercise/completed_sets_list.dart';
 import 'exercise_detail_screen.dart';
-import 'main/main_screen.dart';
+import 'main/main_client_screen.dart';
 
 class WorkoutSessionScreen extends StatefulWidget {
   final int clientWorkoutId;
@@ -118,7 +118,7 @@ class _WorkoutSessionScreenState extends State<WorkoutSessionScreen> {
       } else {
         Navigator.pushAndRemoveUntil(
           context,
-          CupertinoPageRoute(builder: (context) => const MainScreen()),
+          CupertinoPageRoute(builder: (context) => const MainClientScreen()),
           (Route<dynamic> route) => false,
         );
       }
