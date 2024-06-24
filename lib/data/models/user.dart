@@ -10,6 +10,7 @@ class User {
   final String name;
   final String email;
   final String? avatarUrl;
+  final String role;
   final TrainerProfile? trainerProfile;
 
   User({
@@ -17,6 +18,7 @@ class User {
     required this.name,
     required this.email,
     this.avatarUrl,
+    required this.role,
     this.trainerProfile,
   });
 
